@@ -3,12 +3,22 @@
     --color-background: #121212;
     --color-surface: #1e1e1e;
     --color-surface-variant: #2d2d2d;
+    --color-surface-elevated: #333333;
     --color-primary: #d32f2f;
     --color-primary-variant: #b71c1c;
+    --color-primary-light: rgba(211, 47, 47, 0.15);
     --color-text: #ffffff;
     --color-text-secondary: #e0e0e0;
     --color-border: #3d3d3d;
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-error: #f44336;
     --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 8px 16px rgba(0, 0, 0, 0.5);
+    --border-radius-sm: 6px;
+    --border-radius: 10px;
+    --border-radius-lg: 16px;
+    --transition: all 0.3s ease;
 }
 
 * {
@@ -324,27 +334,198 @@ select:focus, input:focus {
 /* Results Card */
 .results-card {
     background-color: var(--color-surface-variant);
-    border-radius: 10px;
-    padding: 40px;
+    border-radius: var(--border-radius-lg);
+    padding: 0;
     margin-top: 40px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-elevated);
     text-align: left;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
 }
 
-.results-card h3 {
-    color: var(--color-primary);
+.results-header {
+    background: linear-gradient(135deg, var(--color-primary-variant), var(--color-primary));
+    padding: 20px 40px;
+    position: relative;
+    text-align: center;
+}
+
+.results-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.results-badge h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.personal-info-container {
+    background-color: var(--color-surface-elevated);
+    padding: 20px 40px;
     border-bottom: 1px solid var(--color-border);
-    padding-bottom: 15px;
-    margin-bottom: 25px;
+}
+
+.personal-info {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--color-text);
+}
+
+.personal-info span {
+    font-weight: 700;
+    color: var(--color-primary);
 }
 
 .results-card h4 {
     font-size: 1.4rem;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 15px;
+    color: var(--color-primary);
+}
+
+.styles-container,
+.explanation-container,
+.gear-checklist,
+.starting-advice,
+.motivational-quote {
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.style-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.style-badge {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-block;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.style-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+    background-color: var(--color-primary-variant);
+}
+
+.explanation {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.motivational-quote {
+    text-align: center;
+    font-style: italic;
+    background-color: var(--color-primary-light);
+}
+
+.motivational-quote p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.gear-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.gear-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+.gear-list li::before {
+    content: '✓';
+    color: var(--color-success);
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.starting-advice h4 {
+    margin-bottom: 15px;
+}
+
+.starting-advice-text {
+    line-height: 1.8;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 40px;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    padding: 15px 25px;
+    border-radius: var(--border-radius);
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: var(--shadow);
+}
+
+.share-button {
+    background-color: #1877f2; /* Facebook blue */
+    color: white;
+}
+
+.download-button {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.action-button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.share-button:hover {
+    background-color: #0d6efd;
+}
+
+.download-button:hover {
+    background-color: var(--color-primary-variant);
 }
 
 .gear-checklist ul {
@@ -372,14 +553,59 @@ select:focus, input:focus {
 
 /* Gym Finder Section */
 .gym-finder {
-    text-align: center;
     background-color: var(--color-background);
+    text-align: center;
+}
+
+.map-search-container {
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.map-search-box {
+    display: flex;
+    gap: 10px;
+}
+
+#gym-location-search {
+    flex: 1;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+#gym-location-search:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.search-button {
+    padding: 0 20px;
+    border-radius: var(--border-radius);
+    border: none;
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-button:hover {
+    background-color: var(--color-primary-variant);
+    transform: translateY(-2px);
 }
 
 .gym-finder-flex {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 30px;
     margin-top: 40px;
 }
@@ -390,15 +616,53 @@ select:focus, input:focus {
 
 .gym-image {
     width: 100%;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
-#map {
-    height: 500px;
+.map-container {
     flex: 0 0 60%;
-    border-radius: 10px;
+    position: relative;
+    height: 500px;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.map-error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    padding: 20px;
+}
+
+.map-error i {
+    color: var(--color-warning);
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.map-error p {
+    margin-bottom: 10px;
+    color: var(--color-text);
+    font-size: 1.1rem;
+}
+
+.map-error.hidden {
+    display: none;
 }
 
 /* Resources Section */
@@ -480,9 +744,22 @@ select:focus, input:focus {
 
 .empty-state-image {
     max-width: 500px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-elevated);
     margin-bottom: 30px;
+    transition: var(--transition);
+}
+
+.empty-state h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--color-text);
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 30px;
 }
 
 /* About Section */
