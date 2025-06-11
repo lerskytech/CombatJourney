@@ -1,0 +1,6 @@
+This folder will contain the following image files:
+- CombatJourney1.png - Hero banner image
+- CombatJourney5.png - Resources section image
+- CombatJourney7.png - About/mission section image
+
+Please add these images to this folder for the website to display correctly.
