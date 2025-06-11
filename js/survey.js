@@ -147,52 +147,189 @@ function generateRecommendations(goal, experience, preference) {
 
 // Display results in the results section
 function displayResults(recommendations, location) {
-    const recommendedStyleElement = document.getElementById('recommended-style');
-    const explanationElement = document.getElementById('explanation');
-    const gearListElement = document.getElementById('gear-list');
-    const adviceTextElement = document.getElementById('starting-advice-text');
+    const resultsSection = document.getElementById('survey-results');
+    const recommendedStyleEl = document.getElementById('recommended-style');
+    const explanationEl = document.getElementById('explanation');
+    const gearListEl = document.getElementById('gear-list');
+    const startingAdviceEl = document.getElementById('starting-advice-text');
     
-    // Display recommended styles with more emphasis
-    recommendedStyleElement.innerHTML = `<h4>Recommended Martial Arts for You</h4>
-                                        <p class="recommended-styles">${recommendations.styles.join(' • ')}</p>`;
+    // Update user personal info with goal, experience level, and location
+    const goalEl = document.getElementById('user-goal');
+    const experienceEl = document.getElementById('user-experience');
+    const locationEl = document.getElementById('user-location');
     
-    // Display explanation
-    explanationElement.innerHTML = `<p>${recommendations.explanation}</p>`;
+    // Get the current form values
+    const goalValue = document.getElementById('goal').value;
+    const experienceValue = document.getElementById('experience').value;
     
-    // Display gear list
-    gearListElement.innerHTML = '';
-    recommendations.gear.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        gearListElement.appendChild(li);
-    });
+    // Format values for display
+    const goalFormatted = goalValue.charAt(0).toUpperCase() + goalValue.slice(1);
+    const experienceFormatted = experienceValue.charAt(0).toUpperCase() + experienceValue.slice(1);
     
-    // Display advice
-    adviceTextElement.textContent = recommendations.advice;
+    // Set the personal info values
+    if (goalEl) goalEl.textContent = goalFormatted;
+    if (experienceEl) experienceEl.textContent = experienceFormatted;
+    if (locationEl) locationEl.textContent = location || 'your area';
     
-    // Show the gym finder section with a scroll hint
-    const gymFinder = document.getElementById('gym-finder');
-    if (gymFinder) {
-        setTimeout(() => {
-            const scrollHint = document.createElement('div');
-            scrollHint.className = 'scroll-hint';
-            scrollHint.innerHTML = '<p>Scroll down to find gyms near you</p><i class="fas fa-chevron-down"></i>';
-            scrollHint.style.opacity = '0';
-            document.querySelector('.results-card').appendChild(scrollHint);
-            
-            setTimeout(() => {
-                scrollHint.style.transition = 'opacity 0.5s ease';
-                scrollHint.style.opacity = '1';
-            }, 100);
-            
-            setTimeout(() => {
-                scrollHint.style.opacity = '0';
-                setTimeout(() => {
-                    scrollHint.remove();
-                }, 500);
-            }, 3000);
-        }, 2000);
+    if (recommendations && recommendations.styles) {
+        // Display recommended styles as badge chips
+        let badgesHTML = '';
+        recommendations.styles.forEach(style => {
+            badgesHTML += `<span class="style-badge">${style}</span>`;
+        });
+        recommendedStyleEl.innerHTML = badgesHTML;
+        
+        // Display explanation
+        explanationEl.innerHTML = `<p>${recommendations.explanation}</p>`;
+        
+        // Display gear checklist
+        let gearListHTML = '';
+        if (recommendations.gear && recommendations.gear.length > 0) {
+            recommendations.gear.forEach(item => {
+                gearListHTML += `<li>${item}</li>`;
+            });
+            gearListEl.innerHTML = gearListHTML;
+        }
+        
+        // Display starting advice
+        if (recommendations.advice) {
+            startingAdviceEl.innerHTML = recommendations.advice;
+        }
+        
+        // Make sure results section is visible
+        if (resultsSection.classList.contains('hidden')) {
+            resultsSection.classList.remove('hidden');
+        }
+        
+        // Smooth scroll to results section
+        resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+        
+        // Add event listeners for share and download buttons
+        setupShareAndDownloadButtons(recommendations, location);
     }
+}
+
+// Share and Download Functionality
+function setupShareAndDownloadButtons(recommendations, location) {
+    const shareButton = document.getElementById('share-journey');
+    const downloadButton = document.getElementById('download-journey');
+    
+    if (shareButton) {
+        shareButton.addEventListener('click', function() {
+            const shareText = `I discovered my ideal martial arts path with CombatJourney! My personalized plan includes ${recommendations.styles.join(', ')} for my ${document.getElementById('goal').value} goals. #CombatJourney #MartialArts`;
+            
+            // Try to use Web Share API if available
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My CombatJourney Plan',
+                    text: shareText,
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Share successful');
+                }).catch(err => {
+                    console.log('Share failed:', err);
+                    fallbackShare(shareText);
+                });
+            } else {
+                fallbackShare(shareText);
+            }
+        });
+    }
+    
+    if (downloadButton) {
+        downloadButton.addEventListener('click', function() {
+            // We'll use html2canvas to convert the results card to an image
+            const resultsCard = document.getElementById('survey-results');
+            
+            // First check if html2canvas is loaded
+            if (typeof html2canvas === 'undefined') {
+                // If not loaded, dynamically load it
+                const script = document.createElement('script');
+                script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+                script.onload = function() {
+                    // Once loaded, process the download
+                    processDownload(resultsCard);
+                };
+                document.head.appendChild(script);
+            } else {
+                // If already loaded, process the download directly
+                processDownload(resultsCard);
+            }
+        });
+    }
+}
+
+// Fallback share function for copying to clipboard
+function fallbackShare(shareText) {
+    // Create temporary textarea element
+    const textarea = document.createElement('textarea');
+    textarea.value = shareText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    // Copy text to clipboard
+    try {
+        document.execCommand('copy');
+        alert('Share text copied to clipboard: ' + shareText);
+    } catch (err) {
+        console.error('Failed to copy share text', err);
+        alert('Failed to copy share text. Please manually share:\n' + shareText);
+    } finally {
+        document.body.removeChild(textarea);
+    }
+}
+
+// Process download of results card as image using html2canvas
+function processDownload(element) {
+    // Show loading indicator
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.style.position = 'fixed';
+    loadingOverlay.style.top = '0';
+    loadingOverlay.style.left = '0';
+    loadingOverlay.style.width = '100%';
+    loadingOverlay.style.height = '100%';
+    loadingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    loadingOverlay.style.display = 'flex';
+    loadingOverlay.style.justifyContent = 'center';
+    loadingOverlay.style.alignItems = 'center';
+    loadingOverlay.style.zIndex = '9999';
+    
+    const loadingText = document.createElement('div');
+    loadingText.textContent = 'Creating your personalized plan image...';
+    loadingText.style.color = 'white';
+    loadingText.style.fontFamily = 'Montserrat, sans-serif';
+    loadingText.style.fontSize = '18px';
+    
+    loadingOverlay.appendChild(loadingText);
+    document.body.appendChild(loadingOverlay);
+    
+    // Use html2canvas with better settings for quality
+    html2canvas(element, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true,
+        backgroundColor: '#1e1e1e',
+        logging: false
+    }).then(canvas => {
+        // Convert canvas to image
+        const imgData = canvas.toDataURL('image/png');
+        
+        // Create download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = imgData;
+        downloadLink.download = 'CombatJourney-Plan.png';
+        
+        // Trigger download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        // Remove loading overlay
+        document.body.removeChild(loadingOverlay);
+    }).catch(error => {
+        console.error('Error generating image:', error);
+        alert('Sorry, there was a problem generating your image. Please try again.');
+        document.body.removeChild(loadingOverlay);
+    });
 }
 
 // Google Maps API Integration
@@ -202,148 +339,158 @@ let infoWindows = [];
 const defaultLocation = { lat: 40.7128, lng: -74.0060 }; // Default to New York
 
 function initMap() {
-    // Create the map with default options
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: defaultLocation,
-        zoom: 12,
-        styles: [
-            { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-            { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-            { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-            {
-                featureType: "administrative.locality",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#d59563" }],
-            },
-            {
-                featureType: "poi",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#d59563" }],
-            },
-            {
-                featureType: "poi.park",
-                elementType: "geometry",
-                stylers: [{ color: "#263c3f" }],
-            },
-            {
-                featureType: "poi.park",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#6b9a76" }],
-            },
-            {
-                featureType: "road",
-                elementType: "geometry",
-                stylers: [{ color: "#38414e" }],
-            },
-            {
-                featureType: "road",
-                elementType: "geometry.stroke",
-                stylers: [{ color: "#212a37" }],
-            },
-            {
-                featureType: "road",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#9ca5b3" }],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "geometry",
-                stylers: [{ color: "#746855" }],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "geometry.stroke",
-                stylers: [{ color: "#1f2835" }],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#f3d19c" }],
-            },
-            {
-                featureType: "transit",
-                elementType: "geometry",
-                stylers: [{ color: "#2f3948" }],
-            },
-            {
-                featureType: "transit.station",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#d59563" }],
-            },
-            {
-                featureType: "water",
-                elementType: "geometry",
-                stylers: [{ color: "#17263c" }],
-            },
-            {
-                featureType: "water",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#515c6d" }],
-            },
-            {
-                featureType: "water",
-                elementType: "labels.text.stroke",
-                stylers: [{ color: "#17263c" }],
-            },
-        ],
-    });
-
-    // Try to get user's location for initial map center
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const userLocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                map.setCenter(userLocation);
-                findGyms(userLocation);
-            },
-            () => {
-                // If user denies location permission, use default location
-                findGyms(defaultLocation);
-            }
-        );
-    } else {
-        // Browser doesn't support geolocation
-        findGyms(defaultLocation);
+    try {
+        // Hide error message if visible
+        document.getElementById('map-error').classList.add('hidden');
+        
+        // Initialize Google Map with dark theme
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: defaultLocation,
+            zoom: 11,
+            // Dark style map to match site theme
+            styles: [
+                { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] },
+                { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] },
+                { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#263c3f" }] },
+                { featureType: "poi.park", elementType: "labels.text.fill", stylers: [{ color: "#6b9a76" }] },
+                { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] },
+                { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#212a37" }] },
+                { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#9ca5b3" }] },
+                { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#746855" }] },
+                { featureType: "road.highway", elementType: "geometry.stroke", stylers: [{ color: "#1f2835" }] },
+                { featureType: "road.highway", elementType: "labels.text.fill", stylers: [{ color: "#f3d19c" }] },
+                { featureType: "transit", elementType: "geometry", stylers: [{ color: "#2f3948" }] },
+                { featureType: "transit.station", elementType: "labels.text.fill", stylers: [{ color: "#d59563" }] },
+                { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] },
+                { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#515c6d" }] },
+                { featureType: "water", elementType: "labels.text.stroke", stylers: [{ color: "#17263c" }] }
+            ],
+            mapTypeControl: false,
+            fullscreenControl: true,
+            streetViewControl: false,
+            zoomControl: true,
+        });
+        
+        // Set up search button functionality
+        const searchButton = document.getElementById('search-gyms-button');
+        const locationInput = document.getElementById('gym-location-search');
+        
+        if (searchButton && locationInput) {
+            searchButton.addEventListener('click', function() {
+                const searchLocation = locationInput.value.trim();
+                if (searchLocation) {
+                    updateMapLocation(searchLocation);
+                }
+            });
+            
+            // Also search on Enter key
+            locationInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchLocation = locationInput.value.trim();
+                    if (searchLocation) {
+                        updateMapLocation(searchLocation);
+                    }
+                }
+            });
+        }
+        
+        // If geolocation is available, ask for permission
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map.setCenter(userLocation);
+                    findGyms(userLocation);
+                },
+                () => {
+                    console.log("Geolocation permission denied");
+                }
+            );
+        } else {
+            console.log("Geolocation not supported by this browser");
+        }
+    } catch (error) {
+        console.error("Error initializing map:", error);
+        showMapError();
     }
 }
 
 // Update map based on entered location
 function updateMapLocation(locationText) {
-    // Use Google Maps Geocoding API to convert address to coordinates
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: locationText }, (results, status) => {
-        if (status === "OK" && results[0]) {
-            const location = results[0].geometry.location;
-            map.setCenter(location);
-            findGyms(location);
-        } else {
-            console.log("Geocode was not successful for the following reason: " + status);
+    // Show loading state
+    const searchButton = document.getElementById('search-gyms-button');
+    if (searchButton) {
+        searchButton.disabled = true;
+        searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+    }
+    
+    // Hide any visible error
+    document.getElementById('map-error').classList.add('hidden');
+    
+    try {
+        const geocoder = new google.maps.Geocoder();
+        
+        geocoder.geocode({ address: locationText }, (results, status) => {
+            // Reset button state
+            if (searchButton) {
+                searchButton.disabled = false;
+                searchButton.innerHTML = '<i class="fas fa-search"></i> Find Gyms';
+            }
+            
+            if (status === google.maps.GeocoderStatus.OK) {
+                const location = results[0].geometry.location;
+                map.setCenter(location);
+                findGyms(location);
+                
+                // Update location display in results if available
+                const locationEl = document.getElementById('user-location');
+                if (locationEl) {
+                    locationEl.textContent = results[0].formatted_address || locationText;
+                }
+            } else {
+                console.error('Geocoding failed: ' + status);
+                alert(`Couldn't find location "${locationText}". Please try again with a city name or zip code.`);
+            }
+        });
+    } catch (error) {
+        console.error("Error updating map location:", error);
+        if (searchButton) {
+            searchButton.disabled = false;
+            searchButton.innerHTML = '<i class="fas fa-search"></i> Find Gyms';
         }
-    });
+        showMapError();
+    }
+}
+
+// Show map error message
+function showMapError() {
+    const mapError = document.getElementById('map-error');
+    if (mapError) {
+        mapError.classList.remove('hidden');
+    }
 }
 
 // Find nearby martial arts gyms
 function findGyms(location) {
-    // Clear existing markers and info windows
+    // Clear existing markers
     markers.forEach(marker => marker.setMap(null));
     markers = [];
     infoWindows = [];
     
-    // Create Places service
-    const service = new google.maps.places.PlacesService(map);
-    
-    // Search for martial arts gyms
-    service.nearbySearch(
-        {
+    try {
+        const service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
             location: location,
             radius: 8000, // 8km radius for more results
-            keyword: ["martial arts", "mma", "boxing", "bjj", "karate", "judo", "muay thai", "wrestling", "taekwondo"],
-            type: ["gym"]
-        },
-        (results, status) => {
+            keyword: ["martial arts", "mma", "boxing", "bjj", "karate", "judo", "muay thai", "taekwondo", "wrestling"],
+            type: ['gym']
+        }, (results, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
                 // Create markers for each gym
                 results.forEach(place => {
@@ -367,27 +514,50 @@ function findGyms(location) {
                     }, 1000);
                 }
                 
-                // Hide empty state if visible
-                const emptyState = document.getElementById('empty-state');
-                if (emptyState && !emptyState.classList.contains('hidden')) {
-                    emptyState.classList.add('hidden');
+                // Update search input with the current location if it's from geocoding
+                const locationInput = document.getElementById('gym-location-search');
+                if (locationInput && locationInput.value === '') {
+                    if (typeof location === 'object' && location.lat && typeof location.lat === 'function') {
+                        // This is a LatLng object from geocoder
+                        // We would need to reverse geocode to get the address
+                    }
                 }
+                
+                // Hide error message if visible
+                document.getElementById('map-error').classList.add('hidden');
             } else {
-                // Show empty state if no results
-                const emptyState = document.getElementById('empty-state');
-                if (emptyState) {
-                    emptyState.classList.remove('hidden');
-                    emptyState.scrollIntoView({behavior: 'smooth', block: 'start'});
+                console.log('No martial arts gyms found in this area');
+                
+                // Show a message that no gyms were found
+                const noResultsMessage = document.createElement('div');
+                noResultsMessage.className = 'no-gyms-message';
+                noResultsMessage.innerHTML = `
+                    <div style="padding: 15px; background-color: rgba(0,0,0,0.7); border-radius: 5px; margin-top: 20px;">
+                        <p>No martial arts gyms found in this area.</p>
+                        <p>Try searching a different location or expanding your search area.</p>
+                    </div>
+                `;
+                
+                // Clear any existing message
+                const existingMessage = document.querySelector('.no-gyms-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                const mapContainer = document.querySelector('.map-container');
+                if (mapContainer) {
+                    mapContainer.appendChild(noResultsMessage);
                 }
                 
                 // Center map on searched location
                 map.setCenter(location);
                 map.setZoom(11);
-                
-                console.log('No martial arts gyms found in this area');
             }
-        }
-    );
+        });
+    } catch (error) {
+        console.error("Error finding gyms:", error);
+        showMapError();
+    }
 }
 
 // Create a marker for a gym
