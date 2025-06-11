@@ -134,10 +134,21 @@ img {
     align-items: center;
 }
 
-.logo h1 {
-    font-size: 1.8rem;
-    margin: 0;
-    color: var(--color-text);
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    width: 180px; /* Size between 120px and 200px as specified */
+    height: auto;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft drop shadow for modern effect */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.site-logo:hover {
+    transform: scale(1.03); /* Subtle zoom on hover for interactivity */
 }
 
 .nav-links {
@@ -187,6 +198,29 @@ img {
     background-color: var(--color-text);
     margin-bottom: 5px;
     transition: all 0.3s ease;
+}
+
+/* Ensure logo is visible and appropriately sized on all devices */
+@media screen and (max-width: 992px) {
+    .site-logo {
+        width: 160px; /* Slightly smaller on medium screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .site-logo {
+        width: 140px; /* Smaller on mobile screens */
+    }
+    
+    .navbar .container {
+        padding: 0 10px; /* Add some padding for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .site-logo {
+        width: 120px; /* Minimum size on very small screens */
+    }
 }
 
 /* Hero Section */
