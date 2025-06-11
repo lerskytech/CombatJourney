@@ -103,24 +103,55 @@
             
             <!-- Results Section (hidden by default) -->
             <div id="survey-results" class="results-card hidden">
-                <h3>Your Personalized Martial Arts Plan</h3>
-                <div id="recommended-style">
-                    <!-- Dynamically filled -->
+                <div class="results-header">
+                    <div class="results-badge">
+                        <span class="badge-icon">🥋</span>
+                        <h3>Your Personalized Martial Arts Plan</h3>
+                    </div>
                 </div>
-                <div id="explanation">
-                    <!-- Dynamically filled -->
+                
+                <div class="personal-info-container">
+                    <p id="personal-info" class="personal-info">Based on your goal of <span id="user-goal"></span>, your experience level (<span id="user-experience"></span>), and your location (<span id="user-location"></span>), here is your CombatJourney:</p>
                 </div>
+                
+                <div class="styles-container">
+                    <h4>Recommended Styles</h4>
+                    <div id="recommended-style" class="style-badges">
+                        <!-- Dynamically filled with badge chips -->
+                    </div>
+                </div>
+                
+                <div class="explanation-container">
+                    <div id="explanation" class="explanation">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+                
+                <div class="motivational-quote">
+                    <p>"Unlock your potential—your journey starts now!"</p>
+                </div>
+                
                 <div class="gear-checklist">
                     <h4>Starter Gear Checklist</h4>
-                    <ul id="gear-list">
+                    <ul id="gear-list" class="gear-list">
                         <!-- Dynamically filled -->
                     </ul>
                 </div>
+                
                 <div class="starting-advice">
-                    <h4>Getting Started</h4>
+                    <h4>How to Get Started</h4>
                     <p id="starting-advice-text">
                         <!-- Dynamically filled -->
                     </p>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="share-journey" class="action-button share-button">
+                        <i class="fas fa-share-alt"></i> Share My Journey
+                    </button>
+                    <button id="download-journey" class="action-button download-button">
+                        <i class="fas fa-download"></i> Download as Image
+                    </button>
                 </div>
             </div>
         </div>
@@ -129,14 +160,29 @@
     <!-- Gym Finder Section -->
     <section id="gym-finder" class="gym-finder">
         <div class="container">
-            <h2>Find Your Gym</h2>
-            <p>Use the map to explore gyms near you. Click a marker for details.</p>
+            <h2>Gym Finder</h2>
+            <p>Find martial arts gyms near you and begin your journey today.</p>
+            
+            <div class="map-search-container">
+                <div class="map-search-box">
+                    <input type="text" id="gym-location-search" placeholder="Enter city, ZIP code, or address">
+                    <button id="search-gyms-button" class="search-button">
+                        <i class="fas fa-search"></i> Find Gyms
+                    </button>
+                </div>
+            </div>
             
             <div class="gym-finder-flex">
                 <div class="gym-finder-image">
                     <img src="images/CombatJourney4.png" alt="Modern MMA gym interior, coach shakes hands with new member, relaxed, welcoming, sunlit." class="gym-image">
                 </div>
-                <div id="map"></div>
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div id="map-error" class="map-error hidden">
+                        <p><i class="fas fa-exclamation-triangle"></i> Couldn't load map—please check your internet or API key.</p>
+                        <p>Try searching "MMA gym near me" on Google Maps instead.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
