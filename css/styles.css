@@ -115,16 +115,19 @@ img {
     transform: translateY(-2px);
 }
 
-/* Navbar */
+/* Navbar - Premium Compact Design */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: rgba(18, 18, 18, 0.95);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
+    background-color: rgba(18, 18, 18, 0.98);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 10px 0; /* Reduced padding for more compact look */
+    height: 80px; /* Fixed height for consistent layout */
+    display: flex;
+    align-items: center;
     transition: all 0.3s ease;
 }
 
@@ -132,38 +135,51 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
 .logo {
     display: flex;
     align-items: center;
+    height: 100%;
+    padding: 0;
 }
 
 .site-logo {
-    width: 180px; /* Size between 120px and 200px as specified */
+    width: 90px; /* Smaller logo as specified (80-100px) */
     height: auto;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft drop shadow for modern effect */
-    transition: transform 0.3s ease; /* Smooth hover effect */
+    border-radius: 6px; /* Slightly reduced corners for cleaner look */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Refined shadow */
+    transition: all 0.2s ease;
+    margin-right: 15px; /* Space from nav items */
 }
 
 .site-logo:hover {
-    transform: scale(1.03); /* Subtle zoom on hover for interactivity */
+    transform: scale(1.05); /* Subtle zoom on hover */
+    box-shadow: 0 3px 12px rgba(211, 47, 47, 0.3); /* Glow effect on hover */
 }
 
 .nav-links {
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
 .nav-links li {
-    margin-left: 30px;
+    margin-left: 25px; /* Slightly closer links */
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .nav-links a {
     color: var(--color-text);
     font-weight: 600;
     position: relative;
+    font-size: 0.95rem; /* Slightly smaller for premium look */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 8px 0;
 }
 
 .nav-links a:hover {
@@ -173,12 +189,12 @@ img {
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: 0;
     left: 0;
     width: 0;
     height: 2px;
     background-color: var(--color-primary);
-    transition: width 0.3s ease;
+    transition: width 0.2s ease;
 }
 
 .nav-links a:hover::after {
@@ -189,50 +205,104 @@ img {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    width: 24px; /* Smaller toggle button */
+    height: 18px;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1001;
 }
 
 .nav-toggle span {
     display: block;
-    width: 28px;
-    height: 3px;
+    width: 100%;
+    height: 2px; /* Thinner lines for premium look */
     background-color: var(--color-text);
-    margin-bottom: 5px;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
-/* Ensure logo is visible and appropriately sized on all devices */
+/* Mobile menu and responsive designs */
 @media screen and (max-width: 992px) {
-    .site-logo {
-        width: 160px; /* Slightly smaller on medium screens */
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .site-logo {
-        width: 140px; /* Smaller on mobile screens */
+    .nav-toggle {
+        display: flex;
     }
     
-    .navbar .container {
-        padding: 0 10px; /* Add some padding for smaller screens */
+    .navbar {
+        height: 70px; /* Shorter navbar on mobile */
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 250px;
+        height: 100vh;
+        background-color: rgba(15, 15, 15, 0.98);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+    
+    .nav-links li {
+        margin: 0;
+        width: 100%;
+        height: auto;
+        padding: 15px 30px;
+    }
+    
+    .nav-links li a {
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+    }
+    
+    .site-logo {
+        width: 90px; /* Consistent size on all screens */
+        margin-right: 0;
+    }
+
+    /* Show active state for burger menu */
+    .nav-toggle.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
     }
 }
 
 @media screen and (max-width: 480px) {
+    .navbar {
+        height: 60px; /* Even more compact on smallest screens */
+        padding: 5px 0;
+    }
+    
     .site-logo {
-        width: 120px; /* Minimum size on very small screens */
+        width: 80px; /* Minimum size on very small screens */
     }
 }
 
-/* Hero Section */
+/* Hero Section - Premium Design */
 .hero {
     height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Align content higher */
     justify-content: center;
     position: relative;
     text-align: center;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.75); /* Less dark background */
+    padding-top: 120px; /* Push content below the header */
 }
 
 .hero-image {
@@ -242,7 +312,7 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
+    opacity: 0.9; /* Higher opacity to be more visible */
     z-index: 0;
 }
 
@@ -253,7 +323,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)); /* Lighter gradient overlay */
     z-index: 1;
 }
 
@@ -264,23 +334,43 @@ img {
     position: relative;
 }
 
+/* Smaller or hidden h1 when logo already contains brand name */
 .hero h1 {
-    font-size: 4rem;
-    margin-bottom: 15px;
-    color: white;
-    text-transform: uppercase;
+    font-size: 0; /* Hide heading if logo already has text */
+    height: 0;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    /* If you still want the heading visible but smaller, use:
+    font-size: 2.5rem;
+    margin-bottom: 10px; */
 }
 
+/* Make tagline more prominent since heading is reduced */
 .hero h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 20px;
     color: var(--color-primary);
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero p {
     font-size: 1.2rem;
-    margin-bottom: 30px;
-    color: var(--color-text-secondary);
+    margin-bottom: 25px;
+    color: var(--color-text);
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Make CTA more prominent */
+.hero .cta-button {
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
 }
 
 /* Survey Section */
