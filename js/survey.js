@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('martial-arts-survey');
     const resultsSection = document.getElementById('survey-results');
+    const stylesOverview = document.querySelector('.styles-overview');
     
     if (form) {
         form.addEventListener('submit', function(e) {
@@ -19,17 +20,44 @@ document.addEventListener('DOMContentLoaded', function() {
             // Display results
             displayResults(recommendations, location);
             
-            // Show results section
+            // Show styles overview and results section
+            if (stylesOverview && stylesOverview.classList.contains('hidden')) {
+                stylesOverview.classList.remove('hidden');
+            }
             resultsSection.classList.remove('hidden');
             
-            // Smooth scroll to results
-            resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+            // Smooth scroll to styles overview
+            stylesOverview.scrollIntoView({behavior: 'smooth', block: 'start'});
             
             // If location was provided, update map
             if (location) {
                 updateMapLocation(location);
+            } else {
+                // Use geolocation if no location provided
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const userLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            map.setCenter(userLocation);
+                            findGyms(userLocation);
+                        },
+                        () => {
+                            // If user denies location permission, use default location
+                            console.log('Geolocation permission denied');
+                        }
+                    );
+                }
             }
         });
+    }
+    
+    // Hide empty state section initially
+    const emptyState = document.getElementById('empty-state');
+    if (emptyState) {
+        emptyState.classList.add('hidden');
     }
 });
 
@@ -124,9 +152,9 @@ function displayResults(recommendations, location) {
     const gearListElement = document.getElementById('gear-list');
     const adviceTextElement = document.getElementById('starting-advice-text');
     
-    // Display recommended styles
-    recommendedStyleElement.innerHTML = `<h4>Recommended Martial Arts:</h4>
-                                        <p>${recommendations.styles.join(', ')}</p>`;
+    // Display recommended styles with more emphasis
+    recommendedStyleElement.innerHTML = `<h4>Recommended Martial Arts for You</h4>
+                                        <p class="recommended-styles">${recommendations.styles.join(' • ')}</p>`;
     
     // Display explanation
     explanationElement.innerHTML = `<p>${recommendations.explanation}</p>`;
@@ -141,11 +169,36 @@ function displayResults(recommendations, location) {
     
     // Display advice
     adviceTextElement.textContent = recommendations.advice;
+    
+    // Show the gym finder section with a scroll hint
+    const gymFinder = document.getElementById('gym-finder');
+    if (gymFinder) {
+        setTimeout(() => {
+            const scrollHint = document.createElement('div');
+            scrollHint.className = 'scroll-hint';
+            scrollHint.innerHTML = '<p>Scroll down to find gyms near you</p><i class="fas fa-chevron-down"></i>';
+            scrollHint.style.opacity = '0';
+            document.querySelector('.results-card').appendChild(scrollHint);
+            
+            setTimeout(() => {
+                scrollHint.style.transition = 'opacity 0.5s ease';
+                scrollHint.style.opacity = '1';
+            }, 100);
+            
+            setTimeout(() => {
+                scrollHint.style.opacity = '0';
+                setTimeout(() => {
+                    scrollHint.remove();
+                }, 500);
+            }, 3000);
+        }, 2000);
+    }
 }
 
 // Google Maps API Integration
 let map;
 let markers = [];
+let infoWindows = [];
 const defaultLocation = { lat: 40.7128, lng: -74.0060 }; // Default to New York
 
 function initMap() {
@@ -274,9 +327,10 @@ function updateMapLocation(locationText) {
 
 // Find nearby martial arts gyms
 function findGyms(location) {
-    // Clear existing markers
+    // Clear existing markers and info windows
     markers.forEach(marker => marker.setMap(null));
     markers = [];
+    infoWindows = [];
     
     // Create Places service
     const service = new google.maps.places.PlacesService(map);
@@ -285,21 +339,52 @@ function findGyms(location) {
     service.nearbySearch(
         {
             location: location,
-            radius: 5000, // 5km radius
-            keyword: ["martial arts", "mma", "boxing", "bjj", "karate", "judo"],
+            radius: 8000, // 8km radius for more results
+            keyword: ["martial arts", "mma", "boxing", "bjj", "karate", "judo", "muay thai", "wrestling", "taekwondo"],
             type: ["gym"]
         },
         (results, status) => {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
                 // Create markers for each gym
                 results.forEach(place => {
                     createMarker(place);
                 });
                 
-                // Center map on first result if available
-                if (results.length > 0) {
-                    map.setCenter(results[0].geometry.location);
+                // Create bounds to fit all markers
+                const bounds = new google.maps.LatLngBounds();
+                markers.forEach(marker => bounds.extend(marker.getPosition()));
+                map.fitBounds(bounds);
+                
+                // If there's only one result, don't zoom in too much
+                if (results.length === 1) {
+                    map.setZoom(14);
                 }
+                
+                // Show the first result's info window by default
+                if (infoWindows.length > 0) {
+                    setTimeout(() => {
+                        infoWindows[0].open(map, markers[0]);
+                    }, 1000);
+                }
+                
+                // Hide empty state if visible
+                const emptyState = document.getElementById('empty-state');
+                if (emptyState && !emptyState.classList.contains('hidden')) {
+                    emptyState.classList.add('hidden');
+                }
+            } else {
+                // Show empty state if no results
+                const emptyState = document.getElementById('empty-state');
+                if (emptyState) {
+                    emptyState.classList.remove('hidden');
+                    emptyState.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+                
+                // Center map on searched location
+                map.setCenter(location);
+                map.setZoom(11);
+                
+                console.log('No martial arts gyms found in this area');
             }
         }
     );
@@ -307,15 +392,18 @@ function findGyms(location) {
 
 // Create a marker for a gym
 function createMarker(place) {
+    // Custom marker icon for better visibility on dark map
     const marker = new google.maps.Marker({
         map: map,
         position: place.geometry.location,
         title: place.name,
+        animation: google.maps.Animation.DROP,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: "#d32f2f",
             fillOpacity: 1,
-            strokeWeight: 0,
+            strokeColor: "#ffffff",
+            strokeWeight: 2,
             scale: 10
         }
     });
@@ -323,22 +411,32 @@ function createMarker(place) {
     // Add info window with gym details
     const infoWindow = new google.maps.InfoWindow({
         content: `
-            <div style="color: #333; padding: 5px;">
-                <h3 style="margin: 0 0 5px; color: #d32f2f;">${place.name}</h3>
-                <div>${place.vicinity || ""}</div>
-                <div>Rating: ${place.rating ? `${place.rating}⭐ (${place.user_ratings_total} reviews)` : "No ratings yet"}</div>
+            <div style="color: #333; padding: 10px; font-family: 'Montserrat', sans-serif;">
+                <h3 style="margin: 0 0 8px; color: #d32f2f; font-size: 16px; font-weight: 700;">${place.name}</h3>
+                <div style="margin-bottom: 5px; font-size: 14px;">${place.vicinity || ""}</div>
+                <div style="margin-bottom: 8px; font-size: 14px;">Rating: ${place.rating ? `${place.rating}⭐ (${place.user_ratings_total} reviews)` : "No ratings yet"}</div>
                 <a href="https://www.google.com/maps/place/?q=place_id:${place.place_id}" target="_blank" 
-                   style="color: #d32f2f; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 5px;">
+                   style="color: #d32f2f; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 5px; font-size: 14px; padding: 5px 0;">
                    View on Google Maps
                 </a>
             </div>
         `
     });
     
-    // Open info window when marker is clicked
+    // Close all open info windows when a new one is clicked
     marker.addListener("click", () => {
+        infoWindows.forEach(iw => iw.close());
         infoWindow.open(map, marker);
     });
     
     markers.push(marker);
+    infoWindows.push(infoWindow);
+    
+    // Bounce marker on hover
+    marker.addListener("mouseover", () => {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(() => marker.setAnimation(null), 750);
+    });
+    
+    return marker;
 }
