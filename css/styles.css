@@ -185,12 +185,21 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../images/CombatJourney1.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     position: relative;
     text-align: center;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    z-index: 0;
 }
 
 .hero::before {
@@ -200,13 +209,15 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+    z-index: 1;
 }
 
 .hero-content {
-    z-index: 1;
+    z-index: 2;
     max-width: 800px;
     padding: 20px;
+    position: relative;
 }
 
 .hero h1 {
@@ -232,17 +243,35 @@ img {
 .survey {
     background-color: var(--color-surface);
     text-align: center;
+    padding-bottom: 100px;
+}
+
+.survey-flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 40px auto;
+    gap: 30px;
+}
+
+.survey-image-container {
+    flex: 0 0 45%;
+}
+
+.survey-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    height: auto;
 }
 
 .survey-card {
     background-color: var(--color-surface-variant);
     border-radius: 10px;
     padding: 40px;
-    margin-top: 40px;
     box-shadow: var(--shadow);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    flex: 0 0 55%;
 }
 
 form {
@@ -277,6 +306,19 @@ select, input {
 select:focus, input:focus {
     outline: none;
     border-color: var(--color-primary);
+}
+
+/* Styles Overview */
+.styles-overview {
+    margin: 60px auto 30px;
+    max-width: 900px;
+}
+
+.styles-banner {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
 }
 
 /* Results Card */
@@ -334,10 +376,28 @@ select:focus, input:focus {
     background-color: var(--color-background);
 }
 
+.gym-finder-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.gym-finder-image {
+    flex: 0 0 40%;
+}
+
+.gym-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
 #map {
     height: 500px;
+    flex: 0 0 60%;
     border-radius: 10px;
-    margin-top: 40px;
     box-shadow: var(--shadow);
 }
 
@@ -370,18 +430,28 @@ select:focus, input:focus {
     height: 200px;
     background-size: cover;
     background-position: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.resource-cards .resource-card:first-child .card-img {
-    background-image: url('../images/CombatJourney5.png');
+.resource-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.resource-cards .resource-card:nth-child(2) .card-img {
-    background-image: url('https://via.placeholder.com/400x200');
+.resource-placeholder {
+    background-color: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.resource-cards .resource-card:nth-child(3) .card-img {
-    background-image: url('https://via.placeholder.com/400x200');
+.resource-placeholder::after {
+    content: 'Resource Image';
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    opacity: 0.5;
 }
 
 .card-content {
@@ -396,30 +466,40 @@ select:focus, input:focus {
     color: var(--color-primary);
 }
 
+/* Empty State / 404 Section */
+.empty-state {
+    text-align: center;
+    padding: 100px 0;
+    background-color: var(--color-background);
+}
+
+.empty-state-image {
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
 /* About Section */
 .about {
     text-align: center;
-    background-image: url('../images/CombatJourney7.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     position: relative;
     color: white;
+    background-color: var(--color-surface);
+    padding-bottom: 100px;
 }
 
-.about::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.about-image {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
 }
 
 .about .container {
     position: relative;
-    z-index: 1;
 }
 
 .mission-statement {
@@ -510,6 +590,26 @@ footer {
 
 /* Responsive Design */
 @media screen and (max-width: 992px) {
+    .survey-flex-container,
+    .gym-finder-flex {
+        flex-direction: column;
+    }
+    
+    .survey-image-container,
+    .survey-card,
+    .gym-finder-image,
+    #map {
+        flex: 0 0 100%;
+    }
+    
+    .survey-image-container,
+    .gym-finder-image {
+        margin-bottom: 30px;
+    }
+    
+    #map {
+        height: 400px;
+    }
     h1 {
         font-size: 2.5rem;
     }
