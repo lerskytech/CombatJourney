@@ -124,8 +124,8 @@ img {
     z-index: 1000;
     background-color: rgba(18, 18, 18, 0.98);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 10px 0; /* Reduced padding for more compact look */
-    height: 80px; /* Fixed height for consistent layout */
+    padding: 0; /* Remove padding for minimum height */
+    height: 70px; /* Fixed height at maximum 70px as specified */
     display: flex;
     align-items: center;
     transition: all 0.3s ease;
@@ -146,7 +146,8 @@ img {
 }
 
 .site-logo {
-    width: 90px; /* Smaller logo as specified (80-100px) */
+    max-width: 80px; /* Limit logo size as specified (60-80px) */
+    width: auto;
     height: auto;
     transition: all 0.2s ease;
     margin-right: 15px; /* Space from nav items */
@@ -231,7 +232,7 @@ img {
     }
     
     .navbar {
-        height: 70px; /* Shorter navbar on mobile */
+        height: 70px; /* Keep consistent with desktop */
     }
     
     .nav-links {
@@ -287,26 +288,36 @@ img {
 
 @media screen and (max-width: 480px) {
     .navbar {
-        height: 60px; /* Even more compact on smallest screens */
-        padding: 5px 0;
+        height: 60px; /* More compact on smallest screens */
+        padding: 0;
     }
     
     .site-logo {
-        width: 80px; /* Minimum size on very small screens */
+        max-width: 60px; /* Minimum size on very small screens as specified (60-80px) */
+    }
+    
+    .hero {
+        margin-top: 60px; /* Match the smaller navbar height */
+        height: calc(100vh - 60px);
+    }
+    
+    .hero-image {
+        max-height: calc(100vh - 60px);
     }
 }
 
 /* Hero Section - Premium Design */
 .hero {
-    height: 100vh;
-    min-height: 550px; /* Ensure minimum height for small screens */
+    height: calc(100vh - 70px); /* Adjust based on navbar height */
+    min-height: 500px; /* Ensure minimum height for small screens */
+    margin-top: 70px; /* Account for fixed header height */
     display: flex;
     align-items: center; /* Center content vertically */
     justify-content: center;
     position: relative;
     text-align: center;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background to ensure text readability */
+    background-color: rgba(0, 0, 0, 0.5); /* Lighter overlay to show more of the image */
 }
 
 .hero-image {
@@ -315,10 +326,11 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure image covers entire area without distortion */
-    object-position: center; /* Center the image */
-    opacity: 0.85; /* Good opacity for both image visibility and text readability */
+    object-fit: contain; /* Ensures no cropping of the image */
+    object-position: center;
+    opacity: 0.9; /* Increased opacity to better see the image */
     z-index: 0;
+    max-height: calc(100vh - 70px); /* Ensure image doesn't exceed container */
 }
 
 .hero::before {
@@ -329,9 +341,9 @@ img {
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, 
-                rgba(0, 0, 0, 0.4) 0%, 
-                rgba(0, 0, 0, 0.5) 50%, 
-                rgba(0, 0, 0, 0.7) 100%); /* Smoother gradient overlay */
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.4) 50%, 
+                rgba(0, 0, 0, 0.5) 100%); /* Lighter gradient to show more of the image */
     z-index: 1;
 }
 
@@ -340,8 +352,11 @@ img {
     max-width: 800px;
     width: 90%; /* Responsive width */
     padding: 30px;
-    position: relative;
-    margin: 0 auto;
+    position: absolute; /* Changed to absolute to ensure perfect centering over image */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Perfect centering technique */
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -371,20 +386,22 @@ img {
 
 .hero p {
     font-size: 1.2rem;
-    margin-bottom: 25px;
-    color: var(--color-text);
-    max-width: 650px;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
 /* Make CTA more prominent */
 .hero .cta-button {
-    padding: 14px 32px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 1.05rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 /* Survey Section */
@@ -1135,6 +1152,41 @@ footer {
     .footer-content {
         flex-direction: column;
         gap: 20px;
+    }
+    
+    .hero h1 {
+        font-size: 0;
+    }
+    
+    .hero h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .hero-content {
+        width: 85%;
+        padding: 20px 10px;
+    }
+    
+    .cta-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
+    .hero {
+        /* Adjust for proper aspect ratio on tablets */
+        height: auto;
+        min-height: 450px;
+    }
+    
+    .hero-image {
+        object-fit: contain;
+        /* Ensure image is fully visible */
+        padding: 10px 0;
+    }
+    
+    .survey-card {
+        padding: 20px;
     }
 }
 
