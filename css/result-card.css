@@ -1,0 +1,526 @@
+/* Premium Achievement Card Styles */
+:root {
+    --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+    --gold-dark: #aa771c;
+    --gold-medium: #bf953f;
+    --gold-light: #fcf6ba;
+    --card-border-radius: 12px;
+    --card-bg: #12121f;
+    --card-inner-bg: rgba(18, 18, 18, 0.7);
+}
+
+/* Achievement Card Container */
+.achievement-card {
+    position: relative;
+    background-color: var(--card-bg);
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    padding: 0;
+    max-width: 550px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* Create 5:7 aspect ratio */
+    aspect-ratio: 5/7;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card Border with Gold Effect */
+.achievement-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: var(--card-border-radius);
+    background: var(--gold-gradient);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Card Header with Badge */
+.card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 10px;
+    position: relative;
+}
+
+.card-badge {
+    width: 90px;
+    height: 90px;
+    background: var(--gold-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-badge-icon {
+    font-size: 40px;
+    color: var(--card-bg);
+}
+
+.card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    text-align: center;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.card-header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 80%;
+    background: var(--gold-gradient);
+}
+
+/* User Information */
+.user-info {
+    padding: 20px;
+    position: relative;
+    background-color: var(--card-inner-bg);
+    margin: 0 10px;
+    border-radius: 8px;
+}
+
+.user-info-label {
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    opacity: 0.7;
+}
+
+.user-info-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Recommended Styles */
+.recommended-styles {
+    padding: 20px;
+}
+
+.recommended-styles h4 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-align: center;
+}
+
+.styles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.style-badge {
+    background: var(--card-inner-bg);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.style-badge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: 20px;
+    background: var(--gold-gradient);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+/* Motivation Quote */
+.motivation-quote {
+    font-style: italic;
+    text-align: center;
+    padding: 15px 20px;
+    position: relative;
+    margin: 10px 30px;
+}
+
+.motivation-quote p {
+    position: relative;
+    z-index: 1;
+    font-size: 0.9rem;
+}
+
+.motivation-quote::before {
+    content: """;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 3rem;
+    opacity: 0.2;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.motivation-quote::after {
+    content: """;
+    position: absolute;
+    bottom: -30px;
+    right: -10px;
+    font-size: 3rem;
+    opacity: 0.2;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Gear Checklist */
+.gear-checklist {
+    padding: 15px 20px;
+    background-color: var(--card-inner-bg);
+    margin: 0 10px 15px;
+    border-radius: 8px;
+}
+
+.gear-checklist h4 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.gear-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.gear-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.gear-check {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    background: var(--gold-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: var(--card-bg);
+}
+
+/* Getting Started Tips */
+.getting-started {
+    padding: 15px 20px;
+    margin: 0 10px 15px;
+    border-radius: 8px;
+    background-color: var(--card-inner-bg);
+}
+
+.getting-started h4 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.getting-started p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Local Gyms Section */
+.local-gyms {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--card-inner-bg);
+    border-radius: var(--card-border-radius);
+    position: relative;
+    max-width: 550px;
+    width: 100%;
+    margin: 30px auto 0;
+}
+
+.local-gyms::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: var(--card-border-radius);
+    background: var(--gold-gradient);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.local-gyms-header {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.local-gyms-header h4 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.gym-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gym-item {
+    background-color: rgba(24, 24, 36, 0.6);
+    padding: 12px 15px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.gym-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gold-gradient);
+}
+
+.gym-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.gym-address, .gym-phone {
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+    opacity: 0.9;
+}
+
+.gym-rating {
+    font-size: 0.85rem;
+    margin-top: 5px;
+    color: var(--gold-light);
+}
+
+.gym-link {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    text-decoration: none;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.gym-link:hover {
+    opacity: 0.8;
+}
+
+/* Share/Download Buttons */
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px 20px;
+    margin-top: auto;
+}
+
+.card-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    background-color: var(--card-inner-bg);
+    color: white;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.card-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: 25px;
+    background: var(--gold-gradient);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+    transition: all 0.2s ease;
+}
+
+.card-button:hover::before {
+    padding: 3px;
+}
+
+.card-button i {
+    font-size: 1rem;
+}
+
+/* Animation for card elements */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.achievement-card > * {
+    animation: fadeUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.achievement-card > *:nth-child(1) { animation-delay: 0.1s; }
+.achievement-card > *:nth-child(2) { animation-delay: 0.2s; }
+.achievement-card > *:nth-child(3) { animation-delay: 0.3s; }
+.achievement-card > *:nth-child(4) { animation-delay: 0.4s; }
+.achievement-card > *:nth-child(5) { animation-delay: 0.5s; }
+.achievement-card > *:nth-child(6) { animation-delay: 0.6s; }
+.achievement-card > *:nth-child(7) { animation-delay: 0.7s; }
+.achievement-card > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* Error messages for location input */
+.location-error {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgba(231, 76, 60, 0.1);
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.location-error.show {
+    max-height: 50px;
+    opacity: 1;
+    margin-top: 5px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .achievement-card {
+        max-width: 100%;
+    }
+    
+    .local-gyms {
+        max-width: 100%;
+    }
+    
+    .card-header {
+        padding: 20px 15px 10px;
+    }
+    
+    .card-badge {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .card-badge-icon {
+        font-size: 30px;
+    }
+    
+    .card-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .user-info-value {
+        font-size: 1rem;
+    }
+    
+    .gear-list {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
