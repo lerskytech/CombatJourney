@@ -455,7 +455,23 @@ function updateMapLocation(locationText) {
                 }
             } else {
                 console.error('Geocoding failed: ' + status);
-                alert(`Couldn't find location "${locationText}". Please try again with a city name or zip code.`);
+                
+                // Show inline error message based on which location field was used
+                const isGymSearch = locationElement.id === 'gym-location-search';
+                const errorElement = isGymSearch ? document.getElementById('gym-location-error') : document.getElementById('location-error');
+                
+                if (errorElement) {
+                    errorElement.textContent = `Couldn't find location "${locationText}". Please try again with a city name or zip code.`;
+                    errorElement.classList.add('active');
+                    locationElement.classList.add('error');
+                    
+                    // Auto-clear error after user starts typing again
+                    locationElement.addEventListener('input', function clearError() {
+                        errorElement.classList.remove('active');
+                        locationElement.classList.remove('error');
+                        locationElement.removeEventListener('input', clearError);
+                    }, { once: true });
+                }
             }
         });
     } catch (error) {
