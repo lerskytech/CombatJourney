@@ -3,298 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CombatJourney | Find Your Path. Find Your Gym. Begin Your Journey.</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>World Cup 2026 Premium Domain Portfolio | Strategic Digital Real Estate</title>
+    <meta name="description" content="Secure an exclusive collection of premium World Cup 2026 domains strategically positioned for immediate SEO dominance, branding rights, and substantial revenue streams.">
+    <meta name="keywords" content="World Cup 2026, premium domains, domain portfolio, digital real estate, soccer domains, football domains, World Cup hosting cities">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="World Cup 2026 Premium Domain Portfolio">
+    <meta property="og:description" content="Own strategic digital real estate for North America's largest sporting event - premium World Cup 2026 city domains.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://worldcup2026domains.com">
+    <!-- Font Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <!-- Favicon -->
-    <link rel="icon" href="images/CombatJourneyLogo3.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Header -->
+    <!-- Header with logo added -->
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <a href="#home">
-                        <img src="images/CombatJourneyLogo3.png" alt="Combat Journey site logo" class="site-logo">
-                    </a>
-                </div>
-                <div class="nav-toggle" id="navToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#resources">Resources</a></li>
-                    <li><a href="#gym-finder">Gym Finder</a></li>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <!-- Logo image - max-height 48px, maintains aspect ratio -->
+                <img src="assets/CupDomainsLogo.png" alt="Cup Domains Logo" class="site-logo">
+                Cup <span>Domains</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="domains.html">Domain Portfolio</a></li>
+                    <li><a href="market.html">Market Potential</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
-            </div>
-        </nav>
+                <button class="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <img src="images/CombatJourney1.png" alt="Martial artist at sunrise, starting journey, modern MMA gear, misty mountains." class="hero-image">
-        <div class="hero-content">
-            <h1>CombatJourney</h1>
-            <h2>Find Your Path. Find Your Gym. Begin Your Journey.</h2>
-            <p>Discover your perfect martial art and the best MMA gym for your needs—zero pressure, just clear, honest guidance.</p>
-            <a href="#survey" class="cta-button">Start Your Journey</a>
-        </div>
-    </section>
-
-    <!-- Survey Section -->
-    <section id="survey" class="survey">
+    <section class="hero">
         <div class="container">
-            <h2>Start Your Personalized Path</h2>
-            <p>Answer a few questions to discover the martial art best suited to your goals and preferences.</p>
-            
-            <div class="survey-flex-container">
-                <div class="survey-image-container">
-                    <img src="images/CombatJourney2.png" alt="Young man in MMA gym, on bench, taking survey on tablet, gloves and bag nearby, soft lighting." class="survey-image">
-                </div>
-                
-                <div class="survey-card">
-                <form id="martial-arts-survey">
-                    <div class="form-group">
-                        <label for="goal">What is your main goal?</label>
-                        <select id="goal" name="goal" required>
-                            <option value="" selected disabled>Select your main goal</option>
-                            <option value="fitness">Fitness & Health</option>
-                            <option value="self-defense">Self-Defense</option>
-                            <option value="confidence">Confidence & Mental Toughness</option>
-                            <option value="competition">Competition & Fighting</option>
-                            <option value="lifestyle">Lifestyle & Community</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="experience">What is your experience level?</label>
-                        <select id="experience" name="experience" required>
-                            <option value="" selected disabled>Select your experience level</option>
-                            <option value="none">None</option>
-                            <option value="beginner">Beginner</option>
-                            <option value="intermediate">Intermediate</option>
-                            <option value="advanced">Advanced</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="preference">What type of martial art are you most interested in?</label>
-                        <select id="preference" name="preference" required>
-                            <option value="" selected disabled>Select your preference</option>
-                            <option value="striking">Striking</option>
-                            <option value="grappling">Grappling</option>
-                            <option value="both">Both/Not Sure</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Where are you located?</label>
-                        <input type="text" id="location" name="location" placeholder="Enter ZIP code or city" required>
-                        <div id="location-error" class="input-error"></div>
-                    </div>
-                    <button type="submit" class="submit-button">Get Your Personalized Plan</button>
-                </form>
-                </div>
-            </div>
-
-            <!-- Styles Overview (hidden by default) -->
-            <div class="styles-overview">
-                <img src="images/CombatJourney3.png" alt="Three martial artists spaced apart, showing BJJ, Muay Thai, or Kung Fu, neutral faces, clean studio background." class="styles-banner">
-            </div>
-            
-            <!-- Results Section (hidden by default) -->
-            <div id="survey-results" class="hidden">
-                <div class="certificate-container">
-                    <!-- Premium Martial Arts Achievement Card -->
-                    <div id="achievement-card" class="achievement-card">
-                        <!-- Certificate Background Image Layer -->
-                        <div class="certificate-bg-layer">
-                            <!-- Image loads here -->
-                        </div>
-                        
-                        <!-- Content Layer - All dynamic content goes here -->
-                        <div class="certificate-content-layer">
-                            <!-- Decorative Corner Elements -->
-                            <div class="corner-decoration corner-top-left"></div>
-                            <div class="corner-decoration corner-top-right"></div>
-                            <div class="corner-decoration corner-bottom-left"></div>
-                            <div class="corner-decoration corner-bottom-right"></div>
-                            
-                            <div class="card-header">
-                                <div class="card-badge">
-                                    <span class="card-badge-icon">🥋</span>
-                                </div>
-                                <h3>YOUR COMBAT JOURNEY</h3>
-                            </div>
-                            
-                            <div class="user-info">
-                                <div class="user-goal">
-                                    <div class="user-info-label">GOAL</div>
-                                    <div id="user-goal" class="user-info-value"><!-- Dynamically filled --></div>
-                                </div>
-                                
-                                <div class="user-experience">
-                                    <div class="user-info-label">EXPERIENCE</div>
-                                    <div id="user-experience" class="user-info-value"><!-- Dynamically filled --></div>
-                                </div>
-                                
-                                <div class="user-location">
-                                    <div class="user-info-label">LOCATION</div>
-                                    <div id="user-location" class="user-info-value"><!-- Dynamically filled --></div>
-                                </div>
-                            </div>
-                            
-                            <div class="recommended-styles">
-                                <h4>Recommended Martial Arts</h4>
-                                <div id="recommended-style" class="styles-container">
-                                    <!-- Dynamically filled with badge chips -->
-                                </div>
-                            </div>
-                            
-                            <div class="motivation-quote">
-                                <p id="motivation-quote-text">"The martial arts journey begins with a single step. Take yours today."</p>
-                            </div>
-                            
-                            <div class="gear-checklist">
-                                <h4>Starter Gear Checklist</h4>
-                                <ul id="gear-list" class="gear-list">
-                                    <!-- Dynamically filled -->
-                                </ul>
-                            </div>
-                            
-                            <div class="getting-started">
-                                <h4>How to Get Started</h4>
-                                <p id="starting-advice-text">
-                                    <!-- Dynamically filled -->
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Local Gyms Section - Integrated within the certificate design -->
-                    <div class="local-gyms-section">
-                        <h4>Top Local Gyms Near You</h4>
-                        <p class="gyms-subtitle">Begin your combat journey at these recommended facilities</p>
-                        <ul id="gym-list" class="gym-list">
-                            <!-- Dynamically filled with local gyms -->
-                            <li class="gym-placeholder">Complete the form to find nearby martial arts gyms</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Download/Share Buttons -->
-                    <div class="certificate-actions">
-                        <button id="share-journey" class="card-button share-button">
-                            <i class="fas fa-share-alt"></i> Share
-                        </button>
-                        <button id="download-journey" class="card-button download-button">
-                            <i class="fas fa-download"></i> Download as Image
-                        </button>
-                    </div>
+            <div class="hero-content">
+                <!-- WorldCupHeroBanner.png - Hero image displayed at full width at the top of homepage -->
+                <img src="./assets/WorldCupHeroBanner.png" alt="World Cup 2026 Stadium with Digital Real Estate Visualization" class="hero-image">
+                <h1 class="hero-title">Own the Ultimate World Cup 2026 Digital Real Estate Portfolio!</h1>
+                <p class="hero-subtitle">Secure an exclusive collection of highly targeted domains strategically tailored for North America's largest sporting event.</p>
+                <div class="btn-group">
+                    <a href="domains.html" class="btn btn-primary">
+                        <!-- CTAButtonIcons.png - Icon for View Domains CTA button -->
+                        <img src="./assets/CTAButtonIcons.png" alt="View Domains Icon" style="width: 20px; margin-right: 8px; vertical-align: middle;">
+                        View Domains
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary">
+                        <!-- CTAButtonIcons.png - Icon for Contact Sales CTA button -->
+                        <img src="./assets/CTAButtonIcons.png" alt="Contact Sales Icon" style="width: 20px; margin-right: 8px; vertical-align: middle;">
+                        Contact Sales
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Gym Finder Section -->
-    <section id="gym-finder" class="gym-finder">
+    <!-- Benefits Section -->
+    <section class="benefits">
         <div class="container">
-            <h2>Gym Finder</h2>
-            <p>Find martial arts gyms near you and begin your journey today.</p>
-            
-            <div class="map-search-container">
-                <div class="map-search-box">
-                    <input type="text" id="gym-location-search" placeholder="Enter city, ZIP code, or address">
-                    <button id="search-gyms-button" class="search-button">
-                        <i class="fas fa-search"></i> Find Gyms
-                    </button>
-                    <div id="gym-location-error" class="input-error"></div>
-                </div>
-            </div>
-            
-            <div class="gym-finder-flex">
-                <div class="gym-finder-image">
-                    <img src="images/CombatJourney4.png" alt="Modern MMA gym interior, coach shakes hands with new member, relaxed, welcoming, sunlit." class="gym-image">
-                </div>
-                <div class="map-container">
-                    <div id="map"></div>
-                    <div id="map-error" class="map-error hidden">
-                        <p><i class="fas fa-exclamation-triangle"></i> Couldn't load map—please check your internet or API key.</p>
-                        <p>Try searching "MMA gym near me" on Google Maps instead.</p>
+            <h2 class="text-center">Strategic Benefits of Our Domain Portfolio</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card animate">
+                    <div class="benefit-icon">
+                        <i class="fas fa-search"></i>
                     </div>
+                    <h3 class="benefit-title">Immediate SEO Dominance</h3>
+                    <p>Gain instant search engine visibility with exact-match city domains targeted specifically for World Cup 2026 traffic.</p>
+                </div>
+                <div class="benefit-card animate">
+                    <div class="benefit-icon">
+                        <i class="fas fa-copyright"></i>
+                    </div>
+                    <h3 class="benefit-title">Exclusive Branding Rights</h3>
+                    <p>Establish your organization as the official digital destination for World Cup 2026 information across major host cities.</p>
+                </div>
+                <div class="benefit-card animate">
+                    <div class="benefit-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="benefit-title">Substantial Revenue Streams</h3>
+                    <p>Monetize guaranteed traffic through ticket sales, affiliate partnerships, advertising, and premium content opportunities.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Resources Section -->
-    <section id="resources" class="resources">
+    <!-- Featured Domains Preview -->
+    <section class="section">
         <div class="container">
-            <h2>Martial Arts Resources</h2>
-            <p>Expert guides and tips to help you begin your combat sports journey.</p>
-            <div class="resource-cards">
-                <div class="resource-card">
-                    <div class="card-img">
-                        <img src="images/CombatJourney5.png" alt="Man at desk, watching martial arts video on laptop, gloves and notebook nearby, cozy, focused." class="resource-image">
+            <h2 class="text-center">Featured Premium Domains</h2>
+            <p class="text-center">Each domain represents a strategic digital foothold in key World Cup 2026 host cities</p>
+            
+            <!-- Updated Featured Domains to match portfolio domains exactly -->
+            <div class="domain-grid">
+                <!-- Featured Domain 1: miamicup2026.com -->
+                <div class="domain-card" data-domain="miamicup2026.com" data-region="usa">
+                    <!-- Using custom Miami city icon as specified -->
+                    <img src="assets/MiamiCup.png" alt="Miami World Cup 2026 Icon" class="city-icon">
+                    <div class="domain-content">
+                        <h3 class="domain-name">miamicup2026.com</h3>
+                        <p>Miami, FL Host City</p>
+                        <div class="domain-price-tag">Premium</div>
+                        <a href="contact.html" class="btn btn-primary domain-btn">Inquire</a>
                     </div>
-                    <div class="card-content">
-                        <h3>Is BJJ Right for Me?</h3>
-                        <p>Everything you need to know about getting started with Brazilian Jiu-Jitsu.</p>
-                        <a href="#" class="resource-link">Read More</a>
+                    <div class="domain-overlay">
+                        <h4 class="domain-overlay-title">miamicup2026.com</h4>
+                        <p class="domain-overlay-text">Ticket sales, hotel bookings, local event guides, transportation info, fan zones, and premium advertising opportunities.</p>
                     </div>
                 </div>
                 
-                <div class="resource-card">
-                    <div class="card-img resource-placeholder">
+                <!-- Featured Domain 2: lacup2026.com -->
+                <div class="domain-card" data-domain="lacup2026.com" data-region="usa">
+                    <!-- Using custom LA city icon as specified -->
+                    <img src="assets/LACup.png" alt="Los Angeles World Cup 2026 Icon" class="city-icon">
+                    <div class="domain-content">
+                        <h3 class="domain-name">lacup2026.com</h3>
+                        <p>Los Angeles, CA Host City</p>
+                        <div class="domain-price-tag">Premium</div>
+                        <a href="contact.html" class="btn btn-primary domain-btn">Inquire</a>
                     </div>
-                    <div class="card-content">
-                        <h3>What to Expect at Your First Muay Thai Class</h3>
-                        <p>A complete beginner's guide to your first Muay Thai experience.</p>
-                        <a href="#" class="resource-link">Read More</a>
+                    <div class="domain-overlay">
+                        <h4 class="domain-overlay-title">lacup2026.com</h4>
+                        <p class="domain-overlay-text">VIP experiences, celebrity events, entertainment guides, luxury accommodations, and high-end advertising opportunities.</p>
                     </div>
                 </div>
                 
-                <div class="resource-card">
-                    <div class="card-img resource-placeholder">
+                <!-- Featured Domain 3: mexicocitycup2026.com -->
+                <div class="domain-card" data-domain="mexicocitycup2026.com" data-region="mexico">
+                    <!-- Using custom Mexico City icon as specified -->
+                    <img src="assets/MexicoCityCup.png" alt="Mexico City World Cup 2026 Icon" class="city-icon">
+                    <div class="domain-content">
+                        <h3 class="domain-name">mexicocitycup2026.com</h3>
+                        <p>Mexico City, Mexico Host City</p>
+                        <div class="domain-price-tag">Premium</div>
+                        <a href="contact.html" class="btn btn-primary domain-btn">Inquire</a>
                     </div>
-                    <div class="card-content">
-                        <h3>Boxing vs. Kickboxing: Which Should You Choose?</h3>
-                        <p>Understanding the key differences to make the right choice for your goals.</p>
-                        <a href="#" class="resource-link">Read More</a>
+                    <div class="domain-overlay">
+                        <h4 class="domain-overlay-title">mexicocitycup2026.com</h4>
+                        <p class="domain-overlay-text">Targeting Spanish and English speaking audiences with tourism information, match details, and cultural experiences.</p>
                     </div>
                 </div>
+                
+                <!-- Featured Domain 4: NYCup.com (not nycup2026.com) as specified -->
+                <div class="domain-card" data-domain="NYCup.com" data-region="usa">
+                    <!-- Using custom NYC icon as specified -->
+                    <img src="assets/NYCup.png" alt="New York City World Cup Icon" class="city-icon">
+                    <div class="domain-content">
+                        <h3 class="domain-name">NYCup.com</h3>
+                        <p>New York City, NY Host City</p>
+                        <div class="domain-price-tag">Premium</div>
+                        <a href="contact.html" class="btn btn-primary domain-btn">Inquire</a>
+                    </div>
+                    <div class="domain-overlay">
+                        <h4 class="domain-overlay-title">NYCup.com</h4>
+                        <p class="domain-overlay-text">Premium event coverage, exclusive ticketing, advertising networks, travel packages, and comprehensive city guides.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 3rem;">
+                <a href="domains.html" class="btn btn-primary">View Complete Domain Portfolio</a>
             </div>
         </div>
     </section>
 
-    <!-- Empty State / 404 Section (hidden by default) -->
-    <section id="empty-state" class="empty-state hidden">
+    <!-- Market Potential Preview -->
+    <section class="section" style="background-color: var(--light-gray);">
         <div class="container">
-            <img src="images/CombatJourney6.png" alt="Martial artist at forked, foggy forest trail, MMA gear, contemplative, grayscale, symbolic." class="empty-state-image">
-            <h2>Path Not Found</h2>
-            <p>Looks like you've reached a fork in the road. Let's help you find your way back to your martial arts journey.</p>
-            <a href="#survey" class="cta-button">Return to Path</a>
+            <h2 class="text-center">Unmatched Market Potential</h2>
+            <p class="text-center">The 2026 FIFA World Cup will be the largest in history, with 48 teams competing across North America</p>
+            
+            <div class="stats">
+                <div class="stat animate">
+                    <div class="stat-number">5.4B</div>
+                    <div class="stat-label">Estimated Global Audience</div>
+                </div>
+                <div class="stat animate">
+                    <div class="stat-number">3.6M</div>
+                    <div class="stat-label">Expected In-Person Attendees</div>
+                </div>
+                <div class="stat animate">
+                    <div class="stat-number">104M</div>
+                    <div class="stat-label">Projected Online Searches</div>
+                </div>
+                <div class="stat animate">
+                    <div class="stat-number">$11B+</div>
+                    <div class="stat-label">Economic Impact</div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 3rem;">
+                <a href="market.html" class="btn btn-secondary">Explore Market Potential</a>
+            </div>
         </div>
     </section>
-    
-    <!-- About Section -->
-    <section id="about" class="about">
+
+    <!-- Call to Action -->
+    <section class="section">
         <div class="container">
-            <img src="images/CombatJourney7.png" alt="Five male martial artists in formation, each a different style, confident, clean gym, cinematic, natural diversity." class="about-image">
-            <h2>Our Mission</h2>
-            <p class="mission-statement">CombatJourney exists to guide you to the right martial arts path and community, with zero intimidation or pressure.</p>
-            
-            <div class="mission-content">
-                <p>We believe martial arts can transform lives, but finding the right path shouldn't be intimidating. Our platform provides straightforward guidance to help you:</p>
-                <ul>
-                    <li>Identify which combat sport matches your goals and personality</li>
-                    <li>Connect with quality local gyms that prioritize technique and safety</li>
-                    <li>Begin your journey with confidence and proper expectations</li>
-                </ul>
-                <p>Whether you seek self-defense skills, competitive outlets, or a supportive fitness community, we'll help you take that first step.</p>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2>Secure This Strategic Digital Asset Package Today</h2>
+                <p style="margin-bottom: 2rem;">Don't miss this once-in-a-generation opportunity to control premium digital real estate for the 2026 World Cup.</p>
+                <a href="contact.html" class="btn btn-primary">Contact Our Sales Team</a>
             </div>
         </div>
     </section>
@@ -302,26 +222,43 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h2>CombatJourney</h2>
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">World Cup <span>2026</span> Domains</div>
+                    <p>Premium digital real estate for North America's biggest sporting event.</p>
                 </div>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="domains.html">Domain Portfolio</a></li>
+                        <li><a href="market.html">Market Potential</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Key Cities</h3>
+                    <ul>
+                        <li><a href="domains.html">USA Host Cities</a></li>
+                        <li><a href="domains.html">Canada Host Cities</a></li>
+                        <li><a href="domains.html">Mexico Host Cities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@worldcup2026domains.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (800) 555-2026</li>
+                    </ul>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2025 CombatJourney. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 World Cup 2026 Domain Portfolio. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
-    <script src="js/survey.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmKa4m7wq95MvlIU9njLajTUDNk9_Xdt4&libraries=places&callback=initMap" async defer></script>
 </body>
 </html>
