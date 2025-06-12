@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CombatJourney | Find Your Path. Find Your Gym. Begin Your Journey.</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="images/CombatJourneyLogo.png" type="image/png">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="#home">
+                        <img src="images/CombatJourney2.png" alt="Combat Journey site logo" class="site-logo">
+                    </a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#gym-finder">Gym Finder</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <img src="images/CombatJourney1.png" alt="Martial artist at sunrise, starting journey, modern MMA gear, misty mountains." class="hero-image">
+        <div class="hero-content">
+            <h1>CombatJourney</h1>
+            <h2>Find Your Path. Find Your Gym. Begin Your Journey.</h2>
+            <p>Discover your perfect martial art and the best MMA gym for your needs—zero pressure, just clear, honest guidance.</p>
+            <a href="#survey" class="cta-button">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Survey Section -->
+    <section id="survey" class="survey">
+        <div class="container">
+            <h2>Start Your Personalized Path</h2>
+            <p>Answer a few questions to discover the martial art best suited to your goals and preferences.</p>
+            
+            <div class="survey-flex-container">
+                <div class="survey-image-container">
+                    <img src="images/CombatJourney2.png" alt="Young man in MMA gym, on bench, taking survey on tablet, gloves and bag nearby, soft lighting." class="survey-image">
+                </div>
+                
+                <div class="survey-card">
+                <form id="martial-arts-survey">
+                    <div class="form-group">
+                        <label for="goal">What is your main goal?</label>
+                        <select id="goal" name="goal" required>
+                            <option value="" selected disabled>Select your main goal</option>
+                            <option value="fitness">Fitness & Health</option>
+                            <option value="self-defense">Self-Defense</option>
+                            <option value="confidence">Confidence & Mental Toughness</option>
+                            <option value="competition">Competition & Fighting</option>
+                            <option value="lifestyle">Lifestyle & Community</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">What is your experience level?</label>
+                        <select id="experience" name="experience" required>
+                            <option value="" selected disabled>Select your experience level</option>
+                            <option value="none">None</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="preference">What type of martial art are you most interested in?</label>
+                        <select id="preference" name="preference" required>
+                            <option value="" selected disabled>Select your preference</option>
+                            <option value="striking">Striking</option>
+                            <option value="grappling">Grappling</option>
+                            <option value="both">Both/Not Sure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Where are you located?</label>
+                        <input type="text" id="location" name="location" placeholder="Enter ZIP code or city" required>
+                        <div id="location-error" class="input-error"></div>
+                    </div>
+                    <button type="submit" class="submit-button">Get Your Personalized Plan</button>
+                </form>
+                </div>
+            </div>
+
+            <!-- Styles Overview (hidden by default) -->
+            <div class="styles-overview">
+                <img src="images/CombatJourney3.png" alt="Three martial artists spaced apart, showing BJJ, Muay Thai, or Kung Fu, neutral faces, clean studio background." class="styles-banner">
+            </div>
+            
+            <!-- Results Section (hidden by default) -->
+            <div id="survey-results" class="results-card hidden">
+                <div class="results-header">
+                    <div class="results-badge">
+                        <span class="badge-icon">🥋</span>
+                        <h3>Your Personalized Martial Arts Plan</h3>
+                    </div>
+                </div>
+                
+                <div class="personal-info-container">
+                    <p id="personal-info" class="personal-info">Based on your goal of <span id="user-goal"></span>, your experience level (<span id="user-experience"></span>), and your location (<span id="user-location"></span>), here is your CombatJourney:</p>
+                </div>
+                
+                <div class="styles-container">
+                    <h4>Recommended Styles</h4>
+                    <div id="recommended-style" class="style-badges">
+                        <!-- Dynamically filled with badge chips -->
+                    </div>
+                </div>
+                
+                <div class="explanation-container">
+                    <div id="explanation" class="explanation">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+                
+                <div class="motivational-quote">
+                    <p>"Unlock your potential—your journey starts now!"</p>
+                </div>
+                
+                <div class="gear-checklist">
+                    <h4>Starter Gear Checklist</h4>
+                    <ul id="gear-list" class="gear-list">
+                        <!-- Dynamically filled -->
+                    </ul>
+                </div>
+                
+                <div class="starting-advice">
+                    <h4>How to Get Started</h4>
+                    <p id="starting-advice-text">
+                        <!-- Dynamically filled -->
+                    </p>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="share-journey" class="action-button share-button">
+                        <i class="fas fa-share-alt"></i> Share My Journey
+                    </button>
+                    <button id="download-journey" class="action-button download-button">
+                        <i class="fas fa-download"></i> Download as Image
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gym Finder Section -->
+    <section id="gym-finder" class="gym-finder">
+        <div class="container">
+            <h2>Gym Finder</h2>
+            <p>Find martial arts gyms near you and begin your journey today.</p>
+            
+            <div class="map-search-container">
+                <div class="map-search-box">
+                    <input type="text" id="gym-location-search" placeholder="Enter city, ZIP code, or address">
+                    <button id="search-gyms-button" class="search-button">
+                        <i class="fas fa-search"></i> Find Gyms
+                    </button>
+                    <div id="gym-location-error" class="input-error"></div>
+                </div>
+            </div>
+            
+            <div class="gym-finder-flex">
+                <div class="gym-finder-image">
+                    <img src="images/CombatJourney4.png" alt="Modern MMA gym interior, coach shakes hands with new member, relaxed, welcoming, sunlit." class="gym-image">
+                </div>
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div id="map-error" class="map-error hidden">
+                        <p><i class="fas fa-exclamation-triangle"></i> Couldn't load map—please check your internet or API key.</p>
+                        <p>Try searching "MMA gym near me" on Google Maps instead.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="resources">
+        <div class="container">
+            <h2>Martial Arts Resources</h2>
+            <p>Expert guides and tips to help you begin your combat sports journey.</p>
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="card-img">
+                        <img src="images/CombatJourney5.png" alt="Man at desk, watching martial arts video on laptop, gloves and notebook nearby, cozy, focused." class="resource-image">
+                    </div>
+                    <div class="card-content">
+                        <h3>Is BJJ Right for Me?</h3>
+                        <p>Everything you need to know about getting started with Brazilian Jiu-Jitsu.</p>
+                        <a href="#" class="resource-link">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="card-img resource-placeholder">
+                    </div>
+                    <div class="card-content">
+                        <h3>What to Expect at Your First Muay Thai Class</h3>
+                        <p>A complete beginner's guide to your first Muay Thai experience.</p>
+                        <a href="#" class="resource-link">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="card-img resource-placeholder">
+                    </div>
+                    <div class="card-content">
+                        <h3>Boxing vs. Kickboxing: Which Should You Choose?</h3>
+                        <p>Understanding the key differences to make the right choice for your goals.</p>
+                        <a href="#" class="resource-link">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empty State / 404 Section (hidden by default) -->
+    <section id="empty-state" class="empty-state hidden">
+        <div class="container">
+            <img src="images/CombatJourney6.png" alt="Martial artist at forked, foggy forest trail, MMA gear, contemplative, grayscale, symbolic." class="empty-state-image">
+            <h2>Path Not Found</h2>
+            <p>Looks like you've reached a fork in the road. Let's help you find your way back to your martial arts journey.</p>
+            <a href="#survey" class="cta-button">Return to Path</a>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <img src="images/CombatJourney7.png" alt="Five male martial artists in formation, each a different style, confident, clean gym, cinematic, natural diversity." class="about-image">
+            <h2>Our Mission</h2>
+            <p class="mission-statement">CombatJourney exists to guide you to the right martial arts path and community, with zero intimidation or pressure.</p>
+            
+            <div class="mission-content">
+                <p>We believe martial arts can transform lives, but finding the right path shouldn't be intimidating. Our platform provides straightforward guidance to help you:</p>
+                <ul>
+                    <li>Identify which combat sport matches your goals and personality</li>
+                    <li>Connect with quality local gyms that prioritize technique and safety</li>
+                    <li>Begin your journey with confidence and proper expectations</li>
+                </ul>
+                <p>Whether you seek self-defense skills, competitive outlets, or a supportive fitness community, we'll help you take that first step.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>CombatJourney</h2>
+                </div>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 CombatJourney. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/survey.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmKa4m7wq95MvlIU9njLajTUDNk9_Xdt4&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
