@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 // Close mobile menu if open
-                if (navMenu && navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+                if (navLinks && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    if (navToggle) navToggle.classList.remove('active');
                 }
                 
                 // Scroll to the target element
