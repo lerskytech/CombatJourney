@@ -107,56 +107,78 @@
             </div>
             
             <!-- Results Section (hidden by default) -->
-            <div id="survey-results" class="results-card hidden">
-                <div class="results-header">
-                    <div class="results-badge">
-                        <span class="badge-icon">🥋</span>
-                        <h3>Your Personalized Martial Arts Plan</h3>
+            <!-- Premium Achievement Card for Results -->
+            <div id="survey-results" class="hidden">
+                <!-- Premium Martial Arts Achievement Card -->
+                <div id="achievement-card" class="achievement-card">
+                    <div class="card-header">
+                        <div class="card-badge">
+                            <span class="card-badge-icon">🥋</span>
+                        </div>
+                        <h3>Your Combat Journey</h3>
+                    </div>
+                    
+                    <div class="user-info">
+                        <div class="user-goal">
+                            <div class="user-info-label">GOAL</div>
+                            <div id="user-goal" class="user-info-value"><!-- Dynamically filled --></div>
+                        </div>
+                        
+                        <div class="user-experience">
+                            <div class="user-info-label">EXPERIENCE</div>
+                            <div id="user-experience" class="user-info-value"><!-- Dynamically filled --></div>
+                        </div>
+                        
+                        <div class="user-location">
+                            <div class="user-info-label">LOCATION</div>
+                            <div id="user-location" class="user-info-value"><!-- Dynamically filled --></div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommended-styles">
+                        <h4>Recommended Martial Arts</h4>
+                        <div id="recommended-style" class="styles-container">
+                            <!-- Dynamically filled with badge chips -->
+                        </div>
+                    </div>
+                    
+                    <div class="motivation-quote">
+                        <p>"The martial arts journey begins with a single step. Take yours today."</p>
+                    </div>
+                    
+                    <div class="gear-checklist">
+                        <h4>Starter Gear Checklist</h4>
+                        <ul id="gear-list" class="gear-list">
+                            <!-- Dynamically filled -->
+                        </ul>
+                    </div>
+                    
+                    <div class="getting-started">
+                        <h4>How to Get Started</h4>
+                        <p id="starting-advice-text">
+                            <!-- Dynamically filled -->
+                        </p>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button id="share-journey" class="card-button share-button">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button id="download-journey" class="card-button download-button">
+                            <i class="fas fa-download"></i> Download
+                        </button>
                     </div>
                 </div>
                 
-                <div class="personal-info-container">
-                    <p id="personal-info" class="personal-info">Based on your goal of <span id="user-goal"></span>, your experience level (<span id="user-experience"></span>), and your location (<span id="user-location"></span>), here is your CombatJourney:</p>
-                </div>
-                
-                <div class="styles-container">
-                    <h4>Recommended Styles</h4>
-                    <div id="recommended-style" class="style-badges">
-                        <!-- Dynamically filled with badge chips -->
+                <!-- Top Local Gyms Section -->
+                <div id="local-gyms" class="local-gyms">
+                    <div class="local-gyms-header">
+                        <h4>Top Local Gyms</h4>
+                        <p>Begin your journey at these recommended facilities</p>
                     </div>
-                </div>
-                
-                <div class="explanation-container">
-                    <div id="explanation" class="explanation">
-                        <!-- Dynamically filled -->
-                    </div>
-                </div>
-                
-                <div class="motivational-quote">
-                    <p>"Unlock your potential—your journey starts now!"</p>
-                </div>
-                
-                <div class="gear-checklist">
-                    <h4>Starter Gear Checklist</h4>
-                    <ul id="gear-list" class="gear-list">
-                        <!-- Dynamically filled -->
+                    <ul id="gym-list" class="gym-list">
+                        <!-- Dynamically filled with local gyms -->
                     </ul>
-                </div>
-                
-                <div class="starting-advice">
-                    <h4>How to Get Started</h4>
-                    <p id="starting-advice-text">
-                        <!-- Dynamically filled -->
-                    </p>
-                </div>
-                
-                <div class="action-buttons">
-                    <button id="share-journey" class="action-button share-button">
-                        <i class="fas fa-share-alt"></i> Share My Journey
-                    </button>
-                    <button id="download-journey" class="action-button download-button">
-                        <i class="fas fa-download"></i> Download as Image
-                    </button>
                 </div>
             </div>
         </div>
