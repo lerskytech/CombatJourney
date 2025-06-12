@@ -152,6 +152,7 @@ function displayResults(recommendations, location) {
     const explanationEl = document.getElementById('explanation');
     const gearListEl = document.getElementById('gear-list');
     const startingAdviceEl = document.getElementById('starting-advice-text');
+    const motivationQuoteEl = document.getElementById('motivation-quote-text');
     
     // Update user personal info with goal, experience level, and location
     const goalEl = document.getElementById('user-goal');
@@ -161,6 +162,7 @@ function displayResults(recommendations, location) {
     // Get the current form values
     const goalValue = document.getElementById('goal').value;
     const experienceValue = document.getElementById('experience').value;
+    const preferenceValue = document.getElementById('preference').value;
     
     // Format values for display
     const goalFormatted = goalValue.charAt(0).toUpperCase() + goalValue.slice(1);
@@ -186,7 +188,7 @@ function displayResults(recommendations, location) {
         let gearListHTML = '';
         if (recommendations.gear && recommendations.gear.length > 0) {
             recommendations.gear.forEach(item => {
-                gearListHTML += `<li>${item}</li>`;
+                gearListHTML += `<li><span class="gear-check"></span>${item}</li>`;
             });
             gearListEl.innerHTML = gearListHTML;
         }
@@ -194,6 +196,38 @@ function displayResults(recommendations, location) {
         // Display starting advice
         if (recommendations.advice) {
             startingAdviceEl.innerHTML = recommendations.advice;
+        }
+        
+        // Generate and display a motivational quote based on user's goal
+        if (motivationQuoteEl) {
+            const quotes = {
+                'fitness': [
+                    "Train with purpose, transform with passion.",
+                    "Every drop of sweat is progress made visible.",
+                    "Discipline is choosing between what you want now and what you want most."
+                ],
+                'self-defense': [
+                    "True strength lies not in showing power, but in having it and knowing when to use it.",
+                    "Confidence comes not from always being right but from not fearing to be wrong.",
+                    "The best fight is the one you avoid."
+                ],
+                'competition': [
+                    "Champions aren't made in gyms. Champions are made from something deep inside them.",
+                    "The difference between the impossible and the possible lies in determination.",
+                    "Victory belongs to those who believe in it the most and believe in it the longest."
+                ],
+                'tradition': [
+                    "The martial way begins and ends with respect.",
+                    "Master the basics before seeking the secrets.",
+                    "The ultimate aim of martial arts is not having to use them."
+                ]
+            };
+            
+            // Select a random quote from the appropriate category
+            const quoteCategory = quotes[goalValue] || quotes['fitness'];
+            const randomQuote = quoteCategory[Math.floor(Math.random() * quoteCategory.length)];
+            
+            motivationQuoteEl.textContent = randomQuote;
         }
         
         // Make sure results section is visible
@@ -279,56 +313,123 @@ function fallbackShare(shareText) {
     }
 }
 
-// Process download of results card as image using html2canvas
+// Process the download of the results card as an image
 function processDownload(element) {
-    // Show loading indicator
+    // Create loading overlay with premium styling
     const loadingOverlay = document.createElement('div');
     loadingOverlay.style.position = 'fixed';
     loadingOverlay.style.top = '0';
     loadingOverlay.style.left = '0';
     loadingOverlay.style.width = '100%';
     loadingOverlay.style.height = '100%';
-    loadingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    loadingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
     loadingOverlay.style.display = 'flex';
     loadingOverlay.style.justifyContent = 'center';
     loadingOverlay.style.alignItems = 'center';
     loadingOverlay.style.zIndex = '9999';
+    loadingOverlay.style.flexDirection = 'column';
+    
+    // Create a loading animation
+    const loadingSpinner = document.createElement('div');
+    loadingSpinner.style.width = '60px';
+    loadingSpinner.style.height = '60px';
+    loadingSpinner.style.border = '4px solid rgba(186, 147, 62, 0.3)';
+    loadingSpinner.style.borderTop = '4px solid rgba(186, 147, 62, 1)';
+    loadingSpinner.style.borderRadius = '50%';
+    loadingSpinner.style.margin = '0 auto 20px';
+    loadingSpinner.style.animation = 'spin 1.5s linear infinite';
+    
+    // Add the animation keyframes
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(styleSheet);
     
     const loadingText = document.createElement('div');
-    loadingText.textContent = 'Creating your personalized plan image...';
+    loadingText.textContent = 'Creating your premium achievement card...';
     loadingText.style.color = 'white';
     loadingText.style.fontFamily = 'Montserrat, sans-serif';
     loadingText.style.fontSize = '18px';
+    loadingText.style.textAlign = 'center';
+    loadingText.style.maxWidth = '80%';
     
+    // Add a styled subtitle
+    const subtitle = document.createElement('div');
+    subtitle.textContent = 'This may take a few seconds';
+    subtitle.style.color = 'rgba(186, 147, 62, 0.9)';
+    subtitle.style.fontFamily = 'Montserrat, sans-serif';
+    subtitle.style.fontSize = '14px';
+    subtitle.style.marginTop = '10px';
+    
+    loadingOverlay.appendChild(loadingSpinner);
     loadingOverlay.appendChild(loadingText);
+    loadingOverlay.appendChild(subtitle);
     document.body.appendChild(loadingOverlay);
     
-    // Use html2canvas with better settings for quality
+    // Prepare the element for capture
+    const originalPosition = element.style.position;
+    const originalZIndex = element.style.zIndex;
+    const originalBackground = element.style.background;
+    
+    // Temporarily enhance the card for better image quality
+    element.style.position = 'relative';
+    element.style.zIndex = '1';
+    
+    // Use html2canvas with optimized settings for premium quality
     html2canvas(element, {
-        scale: 2, // Higher scale for better quality
+        scale: 3, // Higher scale for better quality
         useCORS: true,
-        backgroundColor: '#1e1e1e',
-        logging: false
+        backgroundColor: null, // Transparent background
+        logging: false,
+        allowTaint: true,
+        removeContainer: true,
+        imageTimeout: 0, // No timeout
+        onclone: function(clonedDoc) {
+            // We can further enhance the cloned element before capturing
+            const clonedElement = clonedDoc.querySelector('#achievement-card');
+            if (clonedElement) {
+                clonedElement.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.6)';
+            }
+        }
     }).then(canvas => {
-        // Convert canvas to image
-        const imgData = canvas.toDataURL('image/png');
+        // Restore original element properties
+        element.style.position = originalPosition;
+        element.style.zIndex = originalZIndex;
+        element.style.background = originalBackground;
+        
+        // Convert canvas to image with high quality
+        const imgData = canvas.toDataURL('image/png', 1.0);
         
         // Create download link
         const downloadLink = document.createElement('a');
         downloadLink.href = imgData;
-        downloadLink.download = 'CombatJourney-Plan.png';
+        downloadLink.download = 'CombatJourney-Certificate.png';
         
         // Trigger download
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
         
-        // Remove loading overlay
-        document.body.removeChild(loadingOverlay);
+        // Remove loading overlay with a slight delay to ensure download starts
+        setTimeout(() => {
+            document.body.removeChild(loadingOverlay);
+            // Remove the added style element
+            document.head.removeChild(styleSheet);
+        }, 500);
     }).catch(error => {
         console.error('Error generating image:', error);
-        alert('Sorry, there was a problem generating your image. Please try again.');
+        alert('Sorry, there was a problem generating your premium certificate. Please try again.');
         document.body.removeChild(loadingOverlay);
+        document.head.removeChild(styleSheet);
+        
+        // Restore original element properties
+        element.style.position = originalPosition;
+        element.style.zIndex = originalZIndex;
+        element.style.background = originalBackground;
     });
 }
 
@@ -494,85 +595,212 @@ function showMapError() {
 
 // Find nearby martial arts gyms
 function findGyms(location) {
-    // Clear existing markers
-    markers.forEach(marker => marker.setMap(null));
-    markers = [];
-    infoWindows = [];
-    
     try {
+        if (!map || !location) return;
+        
+        // Clear any existing markers
+        markers.forEach(marker => marker.setMap(null));
+        markers = [];
+        infoWindows = [];
+        
+        // Create PlacesService
         const service = new google.maps.places.PlacesService(map);
-        service.nearbySearch({
-            location: location,
-            radius: 8000, // 8km radius for more results
-            keyword: ["martial arts", "mma", "boxing", "bjj", "karate", "judo", "muay thai", "taekwondo", "wrestling"],
-            type: ['gym']
-        }, (results, status) => {
-            if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-                // Create markers for each gym
-                results.forEach(place => {
-                    createMarker(place);
-                });
-                
-                // Create bounds to fit all markers
-                const bounds = new google.maps.LatLngBounds();
-                markers.forEach(marker => bounds.extend(marker.getPosition()));
-                map.fitBounds(bounds);
-                
-                // If there's only one result, don't zoom in too much
-                if (results.length === 1) {
-                    map.setZoom(14);
-                }
-                
-                // Show the first result's info window by default
-                if (infoWindows.length > 0) {
-                    setTimeout(() => {
-                        infoWindows[0].open(map, markers[0]);
-                    }, 1000);
-                }
-                
-                // Update search input with the current location if it's from geocoding
-                const locationInput = document.getElementById('gym-location-search');
-                if (locationInput && locationInput.value === '') {
-                    if (typeof location === 'object' && location.lat && typeof location.lat === 'function') {
-                        // This is a LatLng object from geocoder
-                        // We would need to reverse geocode to get the address
-                    }
-                }
-                
-                // Hide error message if visible
-                document.getElementById('map-error').classList.add('hidden');
-            } else {
-                console.log('No martial arts gyms found in this area');
-                
-                // Show a message that no gyms were found
-                const noResultsMessage = document.createElement('div');
-                noResultsMessage.className = 'no-gyms-message';
-                noResultsMessage.innerHTML = `
-                    <div style="padding: 15px; background-color: rgba(0,0,0,0.7); border-radius: 5px; margin-top: 20px;">
-                        <p>No martial arts gyms found in this area.</p>
-                        <p>Try searching a different location or expanding your search area.</p>
+        
+        // Update UI to show loading state
+        const gymList = document.getElementById('gym-list');
+        if (gymList) {
+            gymList.innerHTML = `
+                <li class="gym-placeholder">
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <div style="border: 3px solid rgba(186, 147, 62, 0.2); border-top: 3px solid rgba(186, 147, 62, 1); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin-right: 10px;"></div>
+                        Locating premium martial arts facilities...
                     </div>
+                </li>
+            `;
+            
+            // Add spinner animation if not already added
+            if (!document.getElementById('gym-spinner-animation')) {
+                const styleSheet = document.createElement('style');
+                styleSheet.id = 'gym-spinner-animation';
+                styleSheet.textContent = `
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    
+                    @keyframes fadeIn {
+                        0% { opacity: 0; transform: translateY(10px); }
+                        100% { opacity: 1; transform: translateY(0); }
+                    }
+                    
+                    .gym-item {
+                        animation: fadeIn 0.5s ease forwards;
+                        opacity: 0;
+                    }
                 `;
+                document.head.appendChild(styleSheet);
+            }
+        }
+        
+        // Create request for nearby martial arts gyms
+        const request = {
+            location: location,
+            radius: '8000', // 8km radius for better results
+            keyword: 'martial arts gym MMA BJJ boxing muay thai karate judo taekwondo',
+            type: ['gym']
+        };
+        
+        // Perform nearby search
+        service.nearbySearch(request, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                // Sort results by rating
+                results.sort((a, b) => (b.rating || 0) - (a.rating || 0));
                 
-                // Clear any existing message
-                const existingMessage = document.querySelector('.no-gyms-message');
-                if (existingMessage) {
-                    existingMessage.remove();
+                // Take top 5 results
+                const topGyms = results.slice(0, 5);
+                
+                if (topGyms.length > 0) {
+                    // Clear existing gym list
+                    if (gymList) {
+                        gymList.innerHTML = '';
+                    }
+                    
+                    // Update map bounds to include all gyms
+                    const bounds = new google.maps.LatLngBounds();
+                    bounds.extend(location);
+                    
+                    // Add markers for each gym and create list items
+                    topGyms.forEach((place, index) => {
+                        const marker = createMarker(place);
+                        bounds.extend(place.geometry.location);
+                        
+                        // Add to gym list if it exists
+                        if (gymList) {
+                            const li = document.createElement('li');
+                            li.className = 'gym-item';
+                            li.style.animationDelay = `${0.2 + (index * 0.1)}s`;
+                            
+                            // Format rating stars with font awesome
+                            let ratingHTML = '';
+                            if (place.rating) {
+                                const fullStars = Math.floor(place.rating);
+                                const halfStar = place.rating % 1 >= 0.5;
+                                
+                                let starsHTML = '';
+                                // Add full stars
+                                for (let i = 0; i < fullStars; i++) {
+                                    starsHTML += '<i class="fas fa-star"></i>';
+                                }
+                                // Add half star if needed
+                                if (halfStar) {
+                                    starsHTML += '<i class="fas fa-star-half-alt"></i>';
+                                }
+                                
+                                ratingHTML = `
+                                    <div class="gym-rating">
+                                        <span class="gym-rating-stars">${starsHTML}</span>
+                                        <span class="gym-rating-value">${place.rating.toFixed(1)}</span>
+                                    </div>
+                                `;
+                            }
+                            
+                            // Get detailed place information
+                            service.getDetails(
+                                { placeId: place.place_id, fields: ['formatted_phone_number'] },
+                                (placeDetails, detailsStatus) => {
+                                    // Phone number html if available
+                                    const phoneHTML = (detailsStatus === google.maps.places.PlacesServiceStatus.OK && placeDetails && placeDetails.formatted_phone_number) ?
+                                        `<div class="gym-contact"><i class="fas fa-phone-alt" style="margin-right:5px;"></i>${placeDetails.formatted_phone_number}</div>` : '';
+                                    
+                                    // Create Google Maps link for directions
+                                    const mapsLink = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+                                    
+                                    // Set the complete HTML content for the gym list item
+                                    li.innerHTML = `
+                                        <div class="gym-name">${place.name}</div>
+                                        <div class="gym-address">${place.vicinity || ''}</div>
+                                        ${phoneHTML}
+                                        ${ratingHTML}
+                                        <a href="${mapsLink}" class="view-on-map" target="_blank">
+                                            <i class="fas fa-map-marker-alt"></i> View on Map
+                                        </a>
+                                    `;
+                                }
+                            );
+                            
+                            // Add event to highlight marker when hovering over list item
+                            li.addEventListener('mouseenter', () => {
+                                marker.setAnimation(google.maps.Animation.BOUNCE);
+                                setTimeout(() => marker.setAnimation(null), 750);
+                            });
+                            
+                            gymList.appendChild(li);
+                        }
+                    });
+                    
+                    // Adjust map to show all markers
+                    map.fitBounds(bounds);
+                    
+                    // Don't zoom in too much on small areas
+                    const listener = google.maps.event.addListener(map, 'idle', () => {
+                        if (map.getZoom() > 15) {
+                            map.setZoom(15);
+                        }
+                        google.maps.event.removeListener(listener);
+                    });
+                    
+                    // Hide error message if visible
+                    document.getElementById('map-error').classList.add('hidden');
+                } else {
+                    // No results found
+                    if (gymList) {
+                        gymList.innerHTML = `
+                            <li class="gym-placeholder">
+                                <div style="text-align: center;">
+                                    <i class="fas fa-map-marker-slash" style="color: rgba(186, 147, 62, 0.8); font-size: 1.2rem; margin-bottom: 10px;"></i>
+                                    <div>No martial arts facilities found nearby.</div>
+                                    <div style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">Try searching a different location.</div>
+                                </div>
+                            </li>
+                        `;
+                    }
+                    
+                    // Center map on searched location
+                    map.setCenter(location);
+                    map.setZoom(11);
                 }
-                
-                const mapContainer = document.querySelector('.map-container');
-                if (mapContainer) {
-                    mapContainer.appendChild(noResultsMessage);
+            } else {
+                // API Error
+                if (gymList) {
+                    gymList.innerHTML = `
+                        <li class="gym-placeholder">
+                            <div style="text-align: center;">
+                                <i class="fas fa-exclamation-triangle" style="color: rgba(186, 147, 62, 0.8); font-size: 1.2rem; margin-bottom: 10px;"></i>
+                                <div>Unable to find martial arts facilities.</div>
+                                <div style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">Please try again later.</div>
+                            </div>
+                        </li>
+                    `;
                 }
-                
-                // Center map on searched location
-                map.setCenter(location);
-                map.setZoom(11);
+                console.error("Places search failed due to:", status);
             }
         });
     } catch (error) {
         console.error("Error finding gyms:", error);
         showMapError();
+        
+        const gymList = document.getElementById('gym-list');
+        if (gymList) {
+            gymList.innerHTML = `
+                <li class="gym-placeholder">
+                    <div style="text-align: center;">
+                        <i class="fas fa-exclamation-triangle" style="color: rgba(186, 147, 62, 0.8); font-size: 1.2rem; margin-bottom: 10px;"></i>
+                        <div>Error finding martial arts facilities.</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">Please check your connection and try again.</div>
+                    </div>
+                </li>
+            `;
+        }
     }
 }
 
