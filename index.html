@@ -107,76 +107,75 @@
             </div>
             
             <!-- Results Section (hidden by default) -->
-            <!-- Premium Achievement Card for Results -->
             <div id="survey-results" class="hidden">
-                <!-- Premium Martial Arts Achievement Card -->
-                <div id="achievement-card" class="achievement-card">
-                    <!-- Decorative Corner Elements -->
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
-                    
-                    <div class="card-header">
-                        <div class="card-badge">
-                            <span class="card-badge-icon">🥋</span>
-                        </div>
-                        <h3>Your Combat Journey</h3>
-                    </div>
-                    
-                    <div class="user-info">
-                        <div class="user-goal">
-                            <div class="user-info-label">GOAL</div>
-                            <div id="user-goal" class="user-info-value"><!-- Dynamically filled --></div>
+                <div class="certificate-container">
+                    <!-- Premium Martial Arts Achievement Card -->
+                    <div id="achievement-card" class="achievement-card">
+                        <!-- Certificate Background Image Layer -->
+                        <div class="certificate-bg-layer">
+                            <!-- Image loads here -->
                         </div>
                         
-                        <div class="user-experience">
-                            <div class="user-info-label">EXPERIENCE</div>
-                            <div id="user-experience" class="user-info-value"><!-- Dynamically filled --></div>
+                        <!-- Content Layer - All dynamic content goes here -->
+                        <div class="certificate-content-layer">
+                            <!-- Decorative Corner Elements -->
+                            <div class="corner-decoration corner-top-left"></div>
+                            <div class="corner-decoration corner-top-right"></div>
+                            <div class="corner-decoration corner-bottom-left"></div>
+                            <div class="corner-decoration corner-bottom-right"></div>
+                            
+                            <div class="card-header">
+                                <div class="card-badge">
+                                    <span class="card-badge-icon">🥋</span>
+                                </div>
+                                <h3>YOUR COMBAT JOURNEY</h3>
+                            </div>
+                            
+                            <div class="user-info">
+                                <div class="user-goal">
+                                    <div class="user-info-label">GOAL</div>
+                                    <div id="user-goal" class="user-info-value"><!-- Dynamically filled --></div>
+                                </div>
+                                
+                                <div class="user-experience">
+                                    <div class="user-info-label">EXPERIENCE</div>
+                                    <div id="user-experience" class="user-info-value"><!-- Dynamically filled --></div>
+                                </div>
+                                
+                                <div class="user-location">
+                                    <div class="user-info-label">LOCATION</div>
+                                    <div id="user-location" class="user-info-value"><!-- Dynamically filled --></div>
+                                </div>
+                            </div>
+                            
+                            <div class="recommended-styles">
+                                <h4>Recommended Martial Arts</h4>
+                                <div id="recommended-style" class="styles-container">
+                                    <!-- Dynamically filled with badge chips -->
+                                </div>
+                            </div>
+                            
+                            <div class="motivation-quote">
+                                <p id="motivation-quote-text">"The martial arts journey begins with a single step. Take yours today."</p>
+                            </div>
+                            
+                            <div class="gear-checklist">
+                                <h4>Starter Gear Checklist</h4>
+                                <ul id="gear-list" class="gear-list">
+                                    <!-- Dynamically filled -->
+                                </ul>
+                            </div>
+                            
+                            <div class="getting-started">
+                                <h4>How to Get Started</h4>
+                                <p id="starting-advice-text">
+                                    <!-- Dynamically filled -->
+                                </p>
+                            </div>
                         </div>
-                        
-                        <div class="user-location">
-                            <div class="user-info-label">LOCATION</div>
-                            <div id="user-location" class="user-info-value"><!-- Dynamically filled --></div>
-                        </div>
                     </div>
                     
-                    <div class="recommended-styles">
-                        <h4>Recommended Martial Arts</h4>
-                        <div id="recommended-style" class="styles-container">
-                            <!-- Dynamically filled with badge chips -->
-                        </div>
-                    </div>
-                    
-                    <div class="motivation-quote">
-                        <p id="motivation-quote-text">"The martial arts journey begins with a single step. Take yours today."</p>
-                    </div>
-                    
-                    <div class="gear-checklist">
-                        <h4>Starter Gear Checklist</h4>
-                        <ul id="gear-list" class="gear-list">
-                            <!-- Dynamically filled -->
-                        </ul>
-                    </div>
-                    
-                    <div class="getting-started">
-                        <h4>How to Get Started</h4>
-                        <p id="starting-advice-text">
-                            <!-- Dynamically filled -->
-                        </p>
-                    </div>
-                    
-                    <div class="card-actions">
-                        <button id="share-journey" class="card-button share-button">
-                            <i class="fas fa-share-alt"></i> Share
-                        </button>
-                        <button id="download-journey" class="card-button download-button">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                </div>
-                
-                    <!-- Top Local Gyms Section - Integrated into the certificate -->
+                    <!-- Local Gyms Section - Integrated within the certificate design -->
                     <div class="local-gyms-section">
                         <h4>Top Local Gyms Near You</h4>
                         <p class="gyms-subtitle">Begin your combat journey at these recommended facilities</p>
@@ -185,6 +184,17 @@
                             <li class="gym-placeholder">Complete the form to find nearby martial arts gyms</li>
                         </ul>
                     </div>
+                    
+                    <!-- Download/Share Buttons -->
+                    <div class="certificate-actions">
+                        <button id="share-journey" class="card-button share-button">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button id="download-journey" class="card-button download-button">
+                            <i class="fas fa-download"></i> Download as Image
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -328,15 +328,16 @@ function processDownload(element) {
     loadingOverlay.style.alignItems = 'center';
     loadingOverlay.style.zIndex = '9999';
     loadingOverlay.style.flexDirection = 'column';
+    loadingOverlay.style.transition = 'opacity 0.5s ease';
     
-    // Create a loading animation
+    // Create a loading animation with gold accent
     const loadingSpinner = document.createElement('div');
-    loadingSpinner.style.width = '60px';
-    loadingSpinner.style.height = '60px';
-    loadingSpinner.style.border = '4px solid rgba(186, 147, 62, 0.3)';
-    loadingSpinner.style.borderTop = '4px solid rgba(186, 147, 62, 1)';
+    loadingSpinner.style.width = '70px';
+    loadingSpinner.style.height = '70px';
+    loadingSpinner.style.border = '5px solid rgba(186, 147, 62, 0.3)';
+    loadingSpinner.style.borderTop = '5px solid rgba(212, 175, 55, 1)';
     loadingSpinner.style.borderRadius = '50%';
-    loadingSpinner.style.margin = '0 auto 20px';
+    loadingSpinner.style.margin = '0 auto 25px';
     loadingSpinner.style.animation = 'spin 1.5s linear infinite';
     
     // Add the animation keyframes
@@ -346,90 +347,112 @@ function processDownload(element) {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
     `;
     document.head.appendChild(styleSheet);
     
     const loadingText = document.createElement('div');
-    loadingText.textContent = 'Creating your premium achievement card...';
+    loadingText.textContent = 'Creating your premium certificate...';
     loadingText.style.color = 'white';
     loadingText.style.fontFamily = 'Montserrat, sans-serif';
-    loadingText.style.fontSize = '18px';
+    loadingText.style.fontSize = '20px';
+    loadingText.style.fontWeight = '600';
     loadingText.style.textAlign = 'center';
     loadingText.style.maxWidth = '80%';
     
     // Add a styled subtitle
     const subtitle = document.createElement('div');
-    subtitle.textContent = 'This may take a few seconds';
-    subtitle.style.color = 'rgba(186, 147, 62, 0.9)';
+    subtitle.textContent = 'This will only take a moment';
+    subtitle.style.color = 'rgba(212, 175, 55, 0.9)';
     subtitle.style.fontFamily = 'Montserrat, sans-serif';
-    subtitle.style.fontSize = '14px';
-    subtitle.style.marginTop = '10px';
+    subtitle.style.fontSize = '16px';
+    subtitle.style.marginTop = '12px';
     
     loadingOverlay.appendChild(loadingSpinner);
     loadingOverlay.appendChild(loadingText);
     loadingOverlay.appendChild(subtitle);
     document.body.appendChild(loadingOverlay);
     
-    // Prepare the element for capture
-    const originalPosition = element.style.position;
-    const originalZIndex = element.style.zIndex;
-    const originalBackground = element.style.background;
+    // Get the certificate container for proper capture
+    const certificateContainer = document.querySelector('.certificate-container');
     
-    // Temporarily enhance the card for better image quality
-    element.style.position = 'relative';
-    element.style.zIndex = '1';
+    // Store original styles
+    const originalPosition = certificateContainer.style.position;
+    const originalZIndex = certificateContainer.style.zIndex;
+    const originalTransform = certificateContainer.style.transform;
+    const originalBoxShadow = certificateContainer.style.boxShadow;
+    
+    // Temporarily enhance the certificate for better image quality
+    certificateContainer.style.position = 'relative';
+    certificateContainer.style.zIndex = '1';
+    certificateContainer.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.7)';
+    certificateContainer.style.transform = 'scale(1)';
     
     // Use html2canvas with optimized settings for premium quality
-    html2canvas(element, {
+    html2canvas(certificateContainer, {
         scale: 3, // Higher scale for better quality
         useCORS: true,
         backgroundColor: null, // Transparent background
-        logging: false,
         allowTaint: true,
-        removeContainer: true,
-        imageTimeout: 0, // No timeout
+        logging: false, // Disable logging for production
+        imageTimeout: 0, // No timeout for image loading
         onclone: function(clonedDoc) {
-            // We can further enhance the cloned element before capturing
-            const clonedElement = clonedDoc.querySelector('#achievement-card');
+            // Additional styling modifications for the clone
+            const clonedElement = clonedDoc.querySelector('.certificate-container');
             if (clonedElement) {
-                clonedElement.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.6)';
+                // Enhance visual elements for the download version
+                const bgLayer = clonedElement.querySelector('.certificate-bg-layer');
+                if (bgLayer) {
+                    bgLayer.style.opacity = '1';
+                }
+                
+                // Enhance gold elements
+                const goldElements = clonedElement.querySelectorAll('.corner-decoration, .card-badge');
+                goldElements.forEach(el => {
+                    if (el.style) {
+                        el.style.opacity = '1';
+                    }
+                });
             }
         }
     }).then(canvas => {
-        // Restore original element properties
-        element.style.position = originalPosition;
-        element.style.zIndex = originalZIndex;
-        element.style.background = originalBackground;
-        
-        // Convert canvas to image with high quality
-        const imgData = canvas.toDataURL('image/png', 1.0);
-        
         // Create download link
-        const downloadLink = document.createElement('a');
-        downloadLink.href = imgData;
-        downloadLink.download = 'CombatJourney-Certificate.png';
-        
-        // Trigger download
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        
-        // Remove loading overlay with a slight delay to ensure download starts
+        const link = document.createElement('a');
+        link.download = 'CombatJourney-Certificate.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        // Restore original styles
+        certificateContainer.style.position = originalPosition;
+        certificateContainer.style.zIndex = originalZIndex;
+        certificateContainer.style.transform = originalTransform;
+        certificateContainer.style.boxShadow = originalBoxShadow;
+
+        // Remove loading overlay with fade-out animation
+        loadingOverlay.classList.add('fade-out');
         setTimeout(() => {
             document.body.removeChild(loadingOverlay);
-            // Remove the added style element
             document.head.removeChild(styleSheet);
-        }, 500);
-    }).catch(error => {
-        console.error('Error generating image:', error);
-        alert('Sorry, there was a problem generating your premium certificate. Please try again.');
+        }, 800); // Match this to the CSS animation duration
+    }).catch(err => {
+        console.error('Error generating certificate image:', err);
+        alert('There was an error creating your certificate. Please try again.');
+        
+        // Remove overlay
         document.body.removeChild(loadingOverlay);
         document.head.removeChild(styleSheet);
-        
-        // Restore original element properties
-        element.style.position = originalPosition;
-        element.style.zIndex = originalZIndex;
-        element.style.background = originalBackground;
+
+        // Still restore styles on error
+        certificateContainer.style.position = originalPosition;
+        certificateContainer.style.zIndex = originalZIndex;
+        certificateContainer.style.transform = originalTransform;
+        certificateContainer.style.boxShadow = originalBoxShadow;
     });
 }
 
@@ -801,12 +824,28 @@ function findGyms(location) {
                 </li>
             `;
         }
+    } catch (error) {
+        console.error("Error finding gyms:", error);
+        showMapError();
+        
+        const gymList = document.getElementById('gym-list');
+        if (gymList) {
+            gymList.innerHTML = `
+                <li class="gym-placeholder">
+                    <div style="text-align: center;">
+                        <i class="fas fa-exclamation-triangle" style="color: rgba(186, 147, 62, 0.8); font-size: 1.2rem; margin-bottom: 10px;"></i>
+                        <div>Error finding martial arts facilities.</div>
+                        <div style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">Please check your connection and try again.</div>
+                    </div>
+                </li>
+            `;
+        }
     }
 }
 
-// Create a marker for a gym
+// Create a marker for a gym with premium gold styling
 function createMarker(place) {
-    // Custom marker icon for better visibility on dark map
+    // Custom marker icon with gold colors to match certificate theme
     const marker = new google.maps.Marker({
         map: map,
         position: place.geometry.location,
@@ -814,7 +853,7 @@ function createMarker(place) {
         animation: google.maps.Animation.DROP,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            fillColor: "#d32f2f",
+            fillColor: "#d4af37", // Gold color matching our theme
             fillOpacity: 1,
             strokeColor: "#ffffff",
             strokeWeight: 2,
@@ -822,35 +861,54 @@ function createMarker(place) {
         }
     });
     
-    // Add info window with gym details
+    // Calculate star display for info window
+    let starsDisplay = '';
+    if (place.rating) {
+        const fullStars = Math.floor(place.rating);
+        const halfStar = place.rating % 1 >= 0.5;
+        
+        for (let i = 0; i < fullStars; i++) {
+            starsDisplay += '★'; // Full star
+        }
+        if (halfStar) {
+            starsDisplay += '⯨'; // Half star
+        }
+    }
+    
+    // Add premium styled info window with gold accents
     const infoWindow = new google.maps.InfoWindow({
         content: `
-            <div style="color: #333; padding: 10px; font-family: 'Montserrat', sans-serif;">
-                <h3 style="margin: 0 0 8px; color: #d32f2f; font-size: 16px; font-weight: 700;">${place.name}</h3>
-                <div style="margin-bottom: 5px; font-size: 14px;">${place.vicinity || ""}</div>
-                <div style="margin-bottom: 8px; font-size: 14px;">Rating: ${place.rating ? `${place.rating}⭐ (${place.user_ratings_total} reviews)` : "No ratings yet"}</div>
+            <div style="color: #333; padding: 12px; font-family: 'Montserrat', sans-serif; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 4px;">
+                <h3 style="margin: 0 0 10px; color: #996515; font-size: 16px; font-weight: 700; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 5px;">${place.name}</h3>
+                <div style="margin-bottom: 6px; font-size: 14px;">${place.vicinity || ""}</div>
+                <div style="margin-bottom: 10px; font-size: 14px; display: flex; align-items: center;">
+                    <span style="color: #d4af37; margin-right: 5px;">${starsDisplay}</span>
+                    <span>${place.rating ? place.rating.toFixed(1) : "--"}</span>
+                    <span style="opacity: 0.7; font-size: 12px; margin-left: 5px;">${place.user_ratings_total ? `(${place.user_ratings_total} reviews)` : ""}</span>
+                </div>
                 <a href="https://www.google.com/maps/place/?q=place_id:${place.place_id}" target="_blank" 
-                   style="color: #d32f2f; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 5px; font-size: 14px; padding: 5px 0;">
-                   View on Google Maps
+                   style="background: linear-gradient(135deg, #d4af37 0%, #f7ef8a 40%, #d4af37 60%, #996515 100%); color: #333; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 5px; font-size: 13px; padding: 6px 12px; border-radius: 4px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                   <span style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+                       <span style="font-size: 14px;">➤</span> View on Maps
+                   </span>
                 </a>
             </div>
         `
     });
     
-    // Close all open info windows when a new one is clicked
+    // Add bounce animation and open info window on click
     marker.addListener("click", () => {
+        // Close all open info windows
         infoWindows.forEach(iw => iw.close());
+        // Add bounce animation briefly
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(() => marker.setAnimation(null), 750);
+        // Open this info window
         infoWindow.open(map, marker);
     });
     
     markers.push(marker);
     infoWindows.push(infoWindow);
-    
-    // Bounce marker on hover
-    marker.addListener("mouseover", () => {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(() => marker.setAnimation(null), 750);
-    });
     
     return marker;
 }

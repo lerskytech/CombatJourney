@@ -1,35 +1,70 @@
 /* Premium Achievement Card Styles */
 :root {
-    --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
-    --gold-dark: #aa771c;
-    --gold-medium: #bf953f;
-    --gold-light: #fcf6ba;
-    --card-border-radius: 12px;
-    --card-bg: #12121f;
-    --card-inner-bg: rgba(18, 18, 31, 0.85);
-    --gold-accent: #d4af37;
-    --gold-border: #aa771c;
-    --certificate-bg-pattern: radial-gradient(circle, rgba(25, 25, 35, 0.7) 0%, rgba(18, 18, 31, 0.9) 100%);
+    --card-bg: #1a1a1a;
+    --card-inner-bg: #242424;
+    --card-border-radius: 15px;
+    --gold-light: #d4af37;
+    --gold-dark: #996515;
+    --gold-accent: #ffd700;
+    --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f7ef8a 40%, #d4af37 60%, #996515 100%);
+    --certificate-width: 750px;
+    --certificate-height: 1050px; /* 5:7 aspect ratio */
+}
+
+/* Certificate Container */
+.certificate-container {
+    position: relative;
+    max-width: var(--certificate-width);
+    width: 100%;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Achievement Card Container */
 .achievement-card {
     position: relative;
-    background-color: var(--card-bg);
-    background-image: var(--certificate-bg-pattern);
+    background-color: transparent;
     border-radius: var(--card-border-radius);
     overflow: hidden;
     padding: 0;
-    max-width: 550px;
     width: 100%;
-    margin: 0 auto 30px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
     /* Create 5:7 aspect ratio for certificate look */
     aspect-ratio: 5/7;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     position: relative;
+}
+
+/* Certificate Background Image Layer */
+.certificate-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/CombatJourneyCard1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    z-index: 1;
+}
+
+/* Certificate Content Layer */
+.certificate-content-layer {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(1px);
 }
 
 /* Card Border with Gold Effect */
@@ -449,13 +484,15 @@
 
 /* Local Gyms Section - Integrated into Certificate */
 .local-gyms-section {
-    padding: 18px 25px 22px;
-    background-color: var(--card-inner-bg);
-    margin: 5px 20px 20px;
+    width: 90%;
+    padding: 22px 25px 25px;
+    background-color: rgba(18, 18, 31, 0.85);
+    margin: 15px auto 25px;
     border-radius: 10px;
     position: relative;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    z-index: 1;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    z-index: 3;
+    overflow: hidden;
 }
 
 .local-gyms-section::before {
@@ -627,20 +664,21 @@
     font-size: 0.8rem;
 }
 
-/* Share/Download Buttons */
-.card-actions {
+/* Certificate Actions - Share/Download Buttons */
+.certificate-actions {
     display: flex;
     justify-content: center;
     gap: 20px;
-    padding: 18px 20px;
-    margin-top: auto;
-    background-color: rgba(18, 18, 31, 0.8);
-    border-top: 1px solid rgba(186, 147, 62, 0.3);
+    padding: 22px 20px;
+    width: 90%;
+    margin: 0 auto 10px;
+    background-color: rgba(18, 18, 31, 0.85);
+    border: 1px solid rgba(186, 147, 62, 0.3);
+    border-radius: 8px;
     backdrop-filter: blur(5px);
-    border-bottom-left-radius: var(--card-border-radius);
-    border-bottom-right-radius: var(--card-border-radius);
     position: relative;
-    z-index: 10;
+    z-index: 3;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .card-button {
