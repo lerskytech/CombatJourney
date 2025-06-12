@@ -111,6 +111,12 @@
             <div id="survey-results" class="hidden">
                 <!-- Premium Martial Arts Achievement Card -->
                 <div id="achievement-card" class="achievement-card">
+                    <!-- Decorative Corner Elements -->
+                    <div class="corner-decoration corner-top-left"></div>
+                    <div class="corner-decoration corner-top-right"></div>
+                    <div class="corner-decoration corner-bottom-left"></div>
+                    <div class="corner-decoration corner-bottom-right"></div>
+                    
                     <div class="card-header">
                         <div class="card-badge">
                             <span class="card-badge-icon">🥋</span>
@@ -143,7 +149,7 @@
                     </div>
                     
                     <div class="motivation-quote">
-                        <p>"The martial arts journey begins with a single step. Take yours today."</p>
+                        <p id="motivation-quote-text">"The martial arts journey begins with a single step. Take yours today."</p>
                     </div>
                     
                     <div class="gear-checklist">
@@ -170,16 +176,15 @@
                     </div>
                 </div>
                 
-                <!-- Top Local Gyms Section -->
-                <div id="local-gyms" class="local-gyms">
-                    <div class="local-gyms-header">
-                        <h4>Top Local Gyms</h4>
-                        <p>Begin your journey at these recommended facilities</p>
+                    <!-- Top Local Gyms Section - Integrated into the certificate -->
+                    <div class="local-gyms-section">
+                        <h4>Top Local Gyms Near You</h4>
+                        <p class="gyms-subtitle">Begin your combat journey at these recommended facilities</p>
+                        <ul id="gym-list" class="gym-list">
+                            <!-- Dynamically filled with local gyms -->
+                            <li class="gym-placeholder">Complete the form to find nearby martial arts gyms</li>
+                        </ul>
                     </div>
-                    <ul id="gym-list" class="gym-list">
-                        <!-- Dynamically filled with local gyms -->
-                    </ul>
-                </div>
             </div>
         </div>
     </section>
