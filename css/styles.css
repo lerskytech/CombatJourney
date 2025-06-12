@@ -146,17 +146,15 @@ img {
 }
 
 .site-logo {
-    max-width: 80px; /* Limit logo size as specified (60-80px) */
+    max-width: 60px; /* Made smaller as requested */
     width: auto;
     height: auto;
     transition: all 0.2s ease;
     margin-right: 15px; /* Space from nav items */
-    /* Remove background and make cutout style */
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    /* Support for different background colors */
-    mix-blend-mode: luminosity;
-    opacity: 0.95;
+    opacity: 1;
     object-fit: contain;
+    /* Removed mix-blend-mode and increased opacity for full color display */
 }
 
 .site-logo:hover {
