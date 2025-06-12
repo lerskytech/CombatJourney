@@ -148,15 +148,19 @@ img {
 .site-logo {
     width: 90px; /* Smaller logo as specified (80-100px) */
     height: auto;
-    border-radius: 6px; /* Slightly reduced corners for cleaner look */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Refined shadow */
     transition: all 0.2s ease;
     margin-right: 15px; /* Space from nav items */
+    /* Remove background and make cutout style */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    /* Support for different background colors */
+    mix-blend-mode: luminosity;
+    opacity: 0.95;
+    object-fit: contain;
 }
 
 .site-logo:hover {
     transform: scale(1.05); /* Subtle zoom on hover */
-    box-shadow: 0 3px 12px rgba(211, 47, 47, 0.3); /* Glow effect on hover */
+    filter: drop-shadow(0 3px 6px rgba(211, 47, 47, 0.4)); /* Red glow effect on hover */
 }
 
 .nav-links {
@@ -295,14 +299,14 @@ img {
 /* Hero Section - Premium Design */
 .hero {
     height: 100vh;
+    min-height: 550px; /* Ensure minimum height for small screens */
     display: flex;
-    align-items: flex-start; /* Align content higher */
+    align-items: center; /* Center content vertically */
     justify-content: center;
     position: relative;
     text-align: center;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.75); /* Less dark background */
-    padding-top: 120px; /* Push content below the header */
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background to ensure text readability */
 }
 
 .hero-image {
@@ -311,8 +315,9 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0.9; /* Higher opacity to be more visible */
+    object-fit: cover; /* Ensure image covers entire area without distortion */
+    object-position: center; /* Center the image */
+    opacity: 0.85; /* Good opacity for both image visibility and text readability */
     z-index: 0;
 }
 
@@ -323,15 +328,24 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)); /* Lighter gradient overlay */
+    background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.4) 0%, 
+                rgba(0, 0, 0, 0.5) 50%, 
+                rgba(0, 0, 0, 0.7) 100%); /* Smoother gradient overlay */
     z-index: 1;
 }
 
 .hero-content {
     z-index: 2;
     max-width: 800px;
-    padding: 20px;
+    width: 90%; /* Responsive width */
+    padding: 30px;
     position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Smaller or hidden h1 when logo already contains brand name */
@@ -377,7 +391,11 @@ img {
 .survey {
     background-color: var(--color-surface);
     text-align: center;
-    padding-bottom: 100px;
+    padding: 80px 0 100px;
+    position: relative;
+    /* Section divider */
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
 }
 
 .survey-flex-container {
@@ -852,6 +870,37 @@ select:focus, input:focus {
     text-align: left;
 }
 
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+    position: relative;
+}
+
+/* Error message styling */
+.input-error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding: 5px 0;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.input-error.active {
+    max-height: 60px;
+    opacity: 1;
+}
+
+/* Input validation visual cue */
+input.error {
+    border: 1px solid rgba(255, 77, 77, 0.5);
+    background-color: rgba(255, 77, 77, 0.05);
+}
+
 .resource-link {
     display: inline-block;
     margin-top: 15px;
@@ -887,25 +936,36 @@ select:focus, input:focus {
 }
 
 /* About Section */
+/* About Section - Premium Styling */
 .about {
     text-align: center;
     position: relative;
     color: white;
     background-color: var(--color-surface);
-    padding-bottom: 100px;
+    padding: 80px 0 100px;
+    /* Add section divider */
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
 }
 
 .about-image {
     width: 100%;
-    max-height: 500px;
-    object-fit: cover;
+    max-width: 1200px;
+    height: auto;
+    object-fit: contain; /* Changed from cover to contain to show full image */
     border-radius: 10px;
-    margin-bottom: 40px;
-    box-shadow: var(--shadow);
+    margin: 0 auto 50px;
+    display: block;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    /* Ensure image is not cropped */
+    padding: 0;
 }
 
 .about .container {
     position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .mission-statement {
