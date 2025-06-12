@@ -40,11 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 100) {
-            navbar.style.padding = '15px 0';
+            // More opaque background when scrolled
             navbar.style.backgroundColor = 'rgba(18, 18, 18, 0.98)';
+            navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
         } else {
-            navbar.style.padding = '20px 0';
+            // More transparent when at top
             navbar.style.backgroundColor = 'rgba(18, 18, 18, 0.95)';
+            navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
         }
     });
 });
