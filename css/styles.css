@@ -125,7 +125,7 @@ img {
     background-color: rgba(18, 18, 18, 0.98);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 0; /* Remove padding for minimum height */
-    height: 70px; /* Fixed height at maximum 70px as specified */
+    height: 60px; /* Reduced height to border the bottom of the logo */
     display: flex;
     align-items: center;
     transition: all 0.3s ease;
@@ -230,7 +230,7 @@ img {
     }
     
     .navbar {
-        height: 70px; /* Keep consistent with desktop */
+        height: 60px; /* Match desktop height */
     }
     
     .nav-links {
@@ -286,29 +286,29 @@ img {
 
 @media screen and (max-width: 480px) {
     .navbar {
-        height: 60px; /* More compact on smallest screens */
+        height: 50px; /* Even more compact on smallest screens */
         padding: 0;
     }
     
     .site-logo {
-        max-width: 60px; /* Minimum size on very small screens as specified (60-80px) */
+        max-width: 50px; /* Smaller size on very small screens */
     }
     
     .hero {
-        margin-top: 60px; /* Match the smaller navbar height */
-        height: calc(100vh - 60px);
+        margin-top: 50px; /* Match the smaller navbar height */
+        height: calc(100vh - 50px);
     }
     
     .hero-image {
-        max-height: calc(100vh - 60px);
+        max-height: calc(100vh - 50px);
     }
 }
 
 /* Hero Section - Premium Design */
 .hero {
-    height: calc(100vh - 70px); /* Adjust based on navbar height */
+    height: calc(100vh - 60px); /* Adjust based on navbar height */
     min-height: 500px; /* Ensure minimum height for small screens */
-    margin-top: 70px; /* Account for fixed header height */
+    margin-top: 60px; /* Account for fixed header height */
     display: flex;
     align-items: center; /* Center content vertically */
     justify-content: center;
@@ -328,7 +328,7 @@ img {
     object-position: center;
     opacity: 0.9; /* Increased opacity to better see the image */
     z-index: 0;
-    max-height: calc(100vh - 70px); /* Ensure image doesn't exceed container */
+    max-height: calc(100vh - 60px); /* Ensure image doesn't exceed container */
 }
 
 .hero::before {
